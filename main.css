@@ -1,0 +1,148 @@
+/*Cabecera*/
+
+body{
+    background-color: rgba(0, 0, 0, 0.082);
+    margin: 0px;
+}
+header{
+    width: 100%;
+    height: 100%;
+    background-color: #615f5f;
+    left: 0px;
+    border-bottom: 3px solid orange;
+}
+
+.cabecera{
+    width: 100%;
+    padding-left: 34%;
+    display: inline;
+}
+.cabecera h1{
+    padding-left: 45%;
+    color: white;
+}
+
+.buscador{
+    padding: 12px 15px;
+    padding-top: 0%;
+    padding-left: 40%;
+}
+
+form input{
+    
+    height: 40px;
+    border: none;
+    width: 350px;
+    border-radius: 2px;
+}
+
+form button{
+    border: none;
+    width: 70px;
+    height: 40px;
+    border-radius: 3px;
+    text-align: center;
+    
+    
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+
+/*      Barra       */
+
+.main-nav{
+    
+    display: block; 
+    text-align: center;  
+    padding: 10px; 
+    position: relative;
+    z-index: 111;
+    
+}
+
+.main-nav a{
+    
+    padding:2em;
+    padding-top: 1%;
+    padding-bottom: 0.6%;
+    text-decoration: none;
+    color: white;
+}
+
+.main-nav a:hover{
+    background-color:rgba(133, 129, 129, 0.747) ;
+    transition: 0.3s;
+}
+
+
+
+/*Fin de todo cabecera*/
+
+/*Productos*/
+
+.contenedor_main{
+    text-align: center;
+    
+}
+
+.contenedor_main h2{
+    color: rgba(0, 0, 0, 0.678);
+}
+
+.wrapper{
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    padding: 1em;
+    grid-gap: 5em;
+}
+
+
+@media only screen and (max-width:1500px) {
+    .wrapper{
+        grid-template-columns: repeat(3,1fr);
+    }
+}
+
+@media only screen and (max-width:1300px) {
+    .wrapper{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+.blackbox{
+    border: 1px solid;
+    border-color: rgba(97, 97, 105, 0.1);
+    border-radius:0.5em;
+    background-color: rgba(97, 97, 105, 0.1);
+    max-width: max-content;
+    transition: 0.3s;
+    
+}
+
+
+.blackbox:hover{
+    background-color: rgba(25, 25, 27, 0.479);
+    transform: scale(1.1);
+    transition: 0.3s;
+}
+
+
+
+
+/*Pertenece a Login*/
+
+#inicio{
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.329);
+    border-radius: 5px;
+    
+}
+
