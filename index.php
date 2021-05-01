@@ -3,7 +3,7 @@
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <?php session_start(); 
     if(!isset($_SESSION['nombredeusuario'])){
-            $_SESSION['nombredeusuario']="Inivitado";
+            $_SESSION['nombredeusuario']="Invitado";
     }
 ?>
 <head>
@@ -80,12 +80,14 @@
 
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>';
-        function cambiarNav(sesionactual){
+        
             if(sesionactual=="Invitado"){
-               
+               $("#usuarios").replaceWith('<div id="usuarios"> <a href="login.php">Iniciar Sesion</a> <a href="">Crear Cuenta</a> <a href="logout.php">Log Out</a> </div> ');
 
+            }else{
+                $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
             }
-        }
+        
     </script>
 </main>
 </body>
