@@ -106,6 +106,7 @@ button:hover{
     grid-template-columns: repeat(5,1fr);
     padding: 1em;
     grid-gap: 5em;
+    
 }
 
 
@@ -138,6 +139,10 @@ button:hover{
     transition: 0.3s;
 }
 
+.mostrar{
+    padding-top: 3em;
+    padding-bottom: 3em;
+}
 
 
 
@@ -154,4 +159,6 @@ button:hover{
     border-radius: 5px;
      
 }
+
+
 

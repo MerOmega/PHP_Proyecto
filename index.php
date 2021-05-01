@@ -49,15 +49,13 @@
             <h2>PRODUCTOS</h2>
         </div>
 
-    <div>
-        <button type="button" id="showMore">Mostrar mas</button>
-        <button type="button" id="showLess">Mostrar Menos</button>
-    </div>
+    
     <div class="wrapper" >
+    
         <!-- Consulta a la base-->
             <?php
                 require('coneccion.php'); //enlazo la base
-                $sql= "SELECT * FROM productos ORDER BY precio";
+                $sql= "SELECT * FROM productos ORDER BY idProducto";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -68,7 +66,7 @@
                    <?php
                     echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >'
                     ?>
-                    <p><?php echo "Articulo: " . $row["nombre"]?></p>
+                    <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
                     
                     <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];         
                     ?>
@@ -95,6 +93,12 @@
         }
         cambioUsuario(sesionactual);
     </script>
+    <div>
+        <div class="mostrar">
+            <button type="button" id="showMore">Mostrar mas</button>
+            <button type="button" id="showLess">Mostrar Menos</button>
+        </div>
+    </div>
     <script type="text/javascript" src="main.js"></script>
 </main>
 </body>
