@@ -53,7 +53,7 @@
         <!-- Consulta a la base-->
             <?php
                 require('coneccion.php'); //enlazo la base
-                $sql= "SELECT * FROM productos";
+                $sql= "SELECT * FROM productos ORDER BY precio";
                 $result = $conn->query($sql);
 
                 if ($result->num_rows > 0) {
@@ -80,14 +80,17 @@
 
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>';
-        
+        function cambioUsuario(){
             if(sesionactual=="Invitado"){
                $("#usuarios").replaceWith('<div id="usuarios"> <a href="login.php">Iniciar Sesion</a> <a href="">Crear Cuenta</a> <a href="logout.php">Log Out</a> </div> ');
 
             }else{
                 $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
             }
+            
+        }
         
+        cambioUsuario(sesionactual);
     </script>
 </main>
 </body>
