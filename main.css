@@ -58,20 +58,29 @@ button:hover{
     display: block; 
     text-align: center;  
     padding: 10px; 
+    padding-bottom: 2em;
     position: relative;
     z-index: 111;
     
 }
 
 .main-nav a{
-    
-    padding:2em;
-    padding-top: 1%;
-    padding-bottom: 0.6%;
+    padding:1em;    
     text-decoration: none;
     color: white;
 }
 
+#interfaz{
+    text-align: right;
+}
+#usuarios{
+    text-align: left;
+}
+
+.main-nav div{
+    float: left;
+    width: 50%;
+}
 .main-nav a:hover{
     background-color:rgba(133, 129, 129, 0.747) ;
     transition: 0.3s;

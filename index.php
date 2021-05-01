@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <?php session_start(); 
     if(!isset($_SESSION['nombredeusuario'])){
             $_SESSION['nombredeusuario']="Inivitado";
@@ -24,14 +25,17 @@
             </form>
         </div>
   </div>
-    <div>
-        <nav class="main-nav">
-                <a href="#">Categorias</a>
-                <a href="#">Contacto</a>
-                <a href="login.php">Iniciar Sesion</a>
-                <a href="">Crear Cuenta</a>
-                <a href="logout.php">Log Out</a>
-                <p>Hola <?php echo $_SESSION['nombredeusuario']; ?></p>
+    <div class="main-nav">
+        <nav>
+                <div id="interfaz">
+                    <a href="#">Categorias</a>
+                    <a href="#">Contacto</a>
+                </div>
+                <div id="usuarios">
+                    <a href="login.php">Iniciar Sesion</a>
+                    <a href="">Crear Cuenta</a>
+                    <a href="logout.php">Log Out</a>
+                </div>
         </nav>
     </div>
 </header>
@@ -73,6 +77,16 @@
                 
                 ?>                    
     </div>
+
+    <script type="text/javascript">  
+        var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>';
+        function cambiarNav(sesionactual){
+            if(sesionactual=="Invitado"){
+               
+
+            }
+        }
+    </script>
 </main>
 </body>
 
