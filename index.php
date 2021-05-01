@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
+
 <?php session_start(); 
     if(!isset($_SESSION['nombredeusuario'])){
             $_SESSION['nombredeusuario']="Invitado";
@@ -48,7 +49,10 @@
             <h2>PRODUCTOS</h2>
         </div>
 
-
+    <div>
+        <button type="button" id="showMore">Mostrar mas</button>
+        <button type="button" id="showLess">Mostrar Menos</button>
+    </div>
     <div class="wrapper" >
         <!-- Consulta a la base-->
             <?php
@@ -89,9 +93,9 @@
             }
             
         }
-        
         cambioUsuario(sesionactual);
     </script>
+    <script type="text/javascript" src="main.js"></script>
 </main>
 </body>
 
