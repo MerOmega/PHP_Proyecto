@@ -1,16 +1,16 @@
 var item = document.querySelector(".wrapper");
-var i = 2;
+var i = 5;
 var limite= item.children.length;
 
 for(i;i<item.children.length;i++){
         item.children[i].style.display='none';
 }
-i=2;
+i=5;
 
 function buttonClickMore(){
     if(i<=limite){
         var j=i; /*j debe llegar hasta i*/
-        j+=2;
+        j+=5;
         if((limite-j)<0 || (limite-j)==0){  // si =0 son iguales, si su resta es menor me pase
             j=limite;
         }
