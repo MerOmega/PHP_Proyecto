@@ -20,7 +20,7 @@
         require('coneccion.php');
         $username=$_POST['username'];
         $password=$_POST['password'];
-        $sql= "SELECT * FROM usuarios where nombredeusuario='$username'";
+        $sql= "SELECT * FROM usuarios where binary nombredeusuario= binary '$username' and binary clave=binary '$password'";
         $result = $conn->query($sql);
         $num=mysqli_num_rows($result);
         if($num==1){
