@@ -29,11 +29,11 @@ header{
 }
 
 form input{
-    
     height: 40px;
-    border: none;
+    border: 1px solid black;
     width: 350px;
-    border-radius: 2px;
+    border-radius: 6px;
+    
 }
 
 form button{
@@ -42,6 +42,7 @@ form button{
     height: 40px;
     border-radius: 3px;
     text-align: center;
+    background-color: orange;
     
     
 }
@@ -159,6 +160,7 @@ button:hover{
     border-radius: 5px;
      
 }
+
 
 
 
