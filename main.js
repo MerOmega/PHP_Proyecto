@@ -13,6 +13,7 @@ i=5;
 function evaluarCaducidad(index){
     var j=index;
     var caduco = document.querySelectorAll(".caduca");
+    var vendido = document.querySelectorAll(".disponible");
     /*Obtengo la fecha actual */
     var today = new Date();
     var d = String(today.getDate()).padStart(2, '0');
@@ -20,18 +21,19 @@ function evaluarCaducidad(index){
     var y = today.getFullYear();
     today = y + '-' + m + '-' + d;
     today=today.split("-");
-    var res;
+    
 
     for (j=0; j<limite;j++){
         /**Comparo la fecha convirtiendo el ultimo hijo, es decir <p> que no es visible en la pagina, lo convierto a un arreglo */
-        res=caduco[j].lastElementChild.textContent.split("-");
-        nodo = caduco[j].parentElement;
-        console.log(parseInt( res[0]));
+        var res=caduco[j].lastElementChild.textContent.split("-");
+        var nodo = caduco[j].parentElement;
         if( parseInt( res[0]) < parseInt(today[0]) || parseInt( res[1]) < parseInt(today[1]) || parseInt( res[2]) < parseInt(today[2]) ){
             nodo.remove();  
+        }else if(vendido[j].lastElementChild.textContent!=""){
+            nodo.remove();
         }
-}
-        limite= item.children.length;/*Actualuza la cantidad de Hijos que tiene en ese momento */
+    }
+        limite= item.children.length;/*Actualiza la cantidad de Hijos que tiene en ese momento */
 }
 
 function buttonClickLess(){

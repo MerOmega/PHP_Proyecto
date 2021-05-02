@@ -69,6 +69,7 @@
                             ?>
                             <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
                             <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
+                            <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
                             <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
                             
                             
