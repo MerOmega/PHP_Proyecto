@@ -1,12 +1,38 @@
 var item = document.querySelector(".wrapper");
 var limite= item.children.length;
 var limiteInf = 5;
-
 var i = limiteInf;
+/*Evalua que elemento ya caduco, si estan caducados los elimina*/
+evaluarCaducidad(i);
+//* inicial la pagina mostrando los primeros 5 elementos de la tabla *//
 for(i;i<item.children.length;i++){
         item.children[i].style.display='none';
 }
 i=5;
+
+function evaluarCaducidad(index){
+    var j=index;
+    var caduco = document.querySelectorAll(".caduca");
+    /*Obtengo la fecha actual */
+    var today = new Date();
+    var d = String(today.getDate()).padStart(2, '0');
+    var m = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var y = today.getFullYear();
+    today = y + '-' + m + '-' + d;
+    today=today.split("-");
+    var res;
+
+    for (j=0; j<limite;j++){
+        /**Comparo la fecha convirtiendo el ultimo hijo, es decir <p> que no es visible en la pagina, lo convierto a un arreglo */
+        res=caduco[j].lastElementChild.textContent.split("-");
+        nodo = caduco[j].parentElement;
+        console.log(parseInt( res[0]));
+        if( parseInt( res[0]) < parseInt(today[0]) || parseInt( res[1]) < parseInt(today[1]) || parseInt( res[2]) < parseInt(today[2]) ){
+            nodo.remove();  
+        }
+}
+        limite= item.children.length;/*Actualuza la cantidad de Hijos que tiene en ese momento */
+}
 
 function buttonClickLess(){
     if(i>limiteInf){

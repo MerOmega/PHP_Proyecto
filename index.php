@@ -62,15 +62,18 @@
                 
                 while($row = $result->fetch_assoc()) {
                    ?>
-                   <div class="blackbox">
-                   <?php
-                    echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >'
-                    ?>
-                    <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
-                    
-                    <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];         
-                    ?>
-                    </div>
+                    <div class="blackbox">
+                    <?php
+                            echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >';
+                            
+                            ?>
+                            <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
+                            <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
+                            <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
+                            
+                            
+                            ?>
+                        </div>
                     <?php
                 }
                 } else {
