@@ -34,7 +34,7 @@
                 </div>
                 <div id="usuarios">
                     <a href="login.php">Iniciar Sesion</a>
-                    <a href="">Crear Cuenta</a>
+                    <a href="registrar.php">Crear Cuenta</a>
                     <a href="logout.php">Log Out</a>
                 </div>
         </nav>
@@ -87,10 +87,7 @@
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>';
         function cambioUsuario(){
-            if(sesionactual=="Invitado"){
-               $("#usuarios").replaceWith('<div id="usuarios"> <a href="login.php">Iniciar Sesion</a> <a href="">Crear Cuenta</a> <a href="logout.php">Log Out</a> </div> ');
-
-            }else{
+            if(sesionactual!="Invitado"){
                 $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
             }
             
