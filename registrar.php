@@ -16,13 +16,13 @@
 </header>
  <div>
 
- <form style="text-align:center;" name="registro" action="registrar.php" method="POST">
+ <form id="formulario" style="text-align:center;" name="registro" action="registrar.php" method="POST">
 
     <input type="text" name="user" placeholder="Ingrese nombre de usuario"><br><br>
     <input type="text" name="nombre" placeholder="Ingrese nombre" ><br><br>
     <input type="text" name="apellido" placeholder="Ingrese apellido"><br><br>
     <input type="password" name="clave" placeholder="Ingrese clave"><br><br>
-    <input type="email" name="email" placeholder="Ingrese email"><br><br>
+    <input id="email" type="email" name="email" placeholder="Ingrese email"><br><br>
     <input type="text" name="telefono" placeholder="Ingrese telefono"><br><br>
 
     <button type="submit" name="submit" class="boton">Registrar</button>
