@@ -17,7 +17,7 @@ function validAlfa(variable){
 }
 
 function validAlfaNum(variable){
-    var lettersandNum = /^[A-Za-z0-9 ]+$/; /*Acepta Mayusculas y espacio*/
+    var lettersandNum = /^[A-Za-z0-9 ]+$/; /*Acepta Mayusculas minusculas numeros y espacio*/
     var esValido=true;
     var motivo;
     if(!lettersandNum.test(String(variable.value))){
@@ -29,9 +29,9 @@ function validAlfaNum(variable){
 
 function validPass(pass){
     var string = pass.value;
-    var campoAlfaMayus=/^[A-Z]$/;
+    var campoAlfaMayus=/^[A-Z]$/;   
     var campoAlfaminus=/^[a-z]$/;
-    var especiales = /^[0-9!@#\$%\^\&*\)\(+=._-]$/;
+    var especiales = /^[0-9!@#\$%\^\&*\)\(+=._-]$/;/*Caracteres especiales aceptados*/
     var esValido=true;
     var motivo;
     var mayus=0
@@ -59,7 +59,7 @@ function validPass(pass){
 }
 
 function validMail(mail){
-    var campo=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+    var campo=/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/; /*aceptar 1ergrupo@2dogrupo.3ergrupo  donde el 2er grupo puede tener una extension de entre 2 y 4 chars ej .com .co etc*/
     var esValido=true;
     var motivo;
     if(!campo.test(String(mail.value))){
@@ -75,8 +75,8 @@ function cartel(valido,variable,motivo){
         motivo='ser vacio';
     }
     if(valido===false){
-        alert("Error: No puede "+motivo);
-        variable.style.border='1px solid red';
+        alert("Error: No puede "+motivo);   
+        variable.style.border='1px solid red';      //Si tira error marca un recuadro rojo
         variable.value="";
     }else{
         variable.style.border='1px solid black';
