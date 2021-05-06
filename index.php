@@ -28,8 +28,15 @@
   </div>
     <div class="main-nav">
         <nav>
+                <form action="index.php" method="post">
+                    <select name="categorias">
+                    <option value="">Seccione una categoria</option>
+                    <option value="Electrodomesticos">Electrodomesticos</option>
+                    <option value="Instrumentos">Instrumentos</option>
+                    </select>
+                    <button type="submit" name="seleccion" class="boton">Enviar</button>
+                    </form>
                 <div id="interfaz">
-                    <a href="#">Categorias</a>
                     <a href="#">Contacto</a>
                 </div>
                 <div id="usuarios">
@@ -50,7 +57,7 @@
         </div>
 
     
-    <div class="wrapper" >
+   <div class="wrapper" >
     
         <!-- Consulta a la base-->
             <?php
@@ -83,9 +90,46 @@
                 
                 ?>                    
     </div>
+    <!-- Consulta a la base-->
+        <?php
+        if(isset($_POST["seleccion"])){
+            require('coneccion.php'); //enlazo la base
+            if(isset($_POST['categorias'])){
+                $categoria=$_POST['categorias'];
+                echo "$categoria";
+                $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
+                (P.idCategoriaProducto = C.idCategoriaProducto) WHERE (C.nombre = '$categoria')";
+            
+                 $result = $conn->query($sql);
 
+                if ($result->num_rows > 0) {
+            
+                while($row = $result->fetch_assoc()) {
+                ?>
+                    <div class="blackbox">
+                    <?php
+                        echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >';
+                        
+                        ?>
+                        <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row["idProducto"]?></p>
+                        <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
+                        <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
+                        <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
+                        
+                        
+                        ?>
+                    </div>
+                <?php
+               }
+                } else {
+                    echo "0 results";
+                }
+        }
+        } 
+            ?> 
+                               
     <script type="text/javascript">  
-        var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>';
+        var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
         function cambioUsuario(){
             if(sesionactual!="Invitado"){
                 $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
