@@ -75,14 +75,29 @@ function cartel(valido,variable,motivo){
         motivo='ser vacio';
     }
     if(valido===false){
-        alert("Error: No puede "+motivo);   
+        eliminarNodo(variable);
+        var mensaje= "Error: No puede "+motivo;
+        var child=document.createElement("p");
+        child.textContent=mensaje;
+        variable.parentNode.insertBefore(child,variable.nextSibling);
         variable.style.border='1px solid red';      //Si tira error marca un recuadro rojo
         variable.value="";
     }else{
         variable.style.border='1px solid black';
+        eliminarNodo(variable);
     }
 }
 
+    function eliminarNodo(variable){    /*Elimina el mensaje de error*/
+        try{
+            variable.parentElement.querySelector("p").remove(variable.parentElement.querySelector("p"));
+        }
+        catch(error){
+                /**No hay nodo para eliminar */
+        }
+    }
+
+//mail.parentElement.querySelector("p").removeChild(parentElement.querySelector("p"));
 nombre.addEventListener('blur', function(){
     validAlfa(nombre);
 })
