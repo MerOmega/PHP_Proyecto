@@ -49,24 +49,32 @@
 </header>
 
 <main class="contenedor_main">
-
-    
-
         <div>
             <h2>PRODUCTOS</h2>
         </div>
 
+    <select id="sort">
+        <option value="precioAs">Precio Mayor a menor</option>
+        <option value="precioDesc">Precio Menor a Mayor</option>
+        <option value="fechaAs">Caducidad mas cercana</option>
+        <option value="fechaDes">Caducidad mas lejana</option>
+    </select>
     
-   <div class="wrapper" >
-    
+    <div>
         <!-- Consulta a la base-->
             <?php
                 require('coneccion.php'); //enlazo la base
-                $sql= "SELECT * FROM productos ORDER BY idProducto";
+                ?>
+                <div id="sorted">
+                <?php $sql= "SELECT * FROM productos ORDER BY precio";?>
+                </div>
+                <?php
                 $result = $conn->query($sql);
-
+                ?>
+    </div> 
+    <div class="wrapper" > 
+                <?php
                 if ($result->num_rows > 0) {
-                
                 while($row = $result->fetch_assoc()) {
                    ?>
                     <div class="blackbox">
@@ -78,8 +86,6 @@
                             <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
                             <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
                             <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
-                            
-                            
                             ?>
                         </div>
                     <?php
@@ -128,6 +134,7 @@
         } 
             ?> 
                                
+    </div>          
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
         function cambioUsuario(){

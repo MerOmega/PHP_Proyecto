@@ -77,6 +77,8 @@ function buttonClickMore(){
     }
 }
 
+
+
 document.getElementById('showMore').addEventListener('click',function(){
     buttonClickMore();
 });
