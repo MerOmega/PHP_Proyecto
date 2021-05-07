@@ -46,12 +46,26 @@
             <h2>PRODUCTOS</h2>
         </div>
 
+        <div>
+        <!-- Consulta a la base-->
+            <?php
+                require('coneccion.php'); //enlazo la base
+                ?>
+                <div id="sorted">
+                <?php $sql= "SELECT * FROM categorias_productos";?>
+                </div>
+                <?php
+                $result = $conn->query($sql);
+                ?>
+    </div> 
+
         <div id="contenedor_categorias">
-        <form class="categoria" action="index.php" method="post">
+        <form action="index.php" method="post">
                         <select name="categorias">
-                        <option value="">Seccione una categoria</option>
-                        <option value="Electrodomesticos">Electrodomesticos</option>
-                        <option value="Instrumentos">Instrumentos</option>
+                        <option value="">Todas las categorias</option>
+                        <?php while($datos=mysqli_fetch_array( $result )){ ?>
+                        <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
+                        <?php } ?>
                         </select>
             <button type="submit" name="seleccion" class="boton">Enviar</button>
         </form>
@@ -68,6 +82,8 @@
          </form>
      </div>
 
+    
+    <div class="wrapper" > 
     <div>
         <!-- Consulta a la base-->
             <?php
@@ -80,7 +96,6 @@
                 $result = $conn->query($sql);
                 ?>
     </div> 
-    <div class="wrapper" > 
                 <?php
                 if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -104,6 +119,8 @@
                 
                 ?>                    
     </div>
+    
+    <div>
     <!-- Consulta a la base-->
         <?php
         if(isset($_POST["seleccion"])){
@@ -122,6 +139,8 @@
                 ?>
                     <div class="blackbox">
                     <?php
+
+                    /*poner un if*/
                         echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >';
                         
                         ?>
