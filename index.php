@@ -28,14 +28,7 @@
   </div>
     <div class="main-nav">
         <nav>
-                <form action="index.php" method="post">
-                    <select name="categorias">
-                    <option value="">Seccione una categoria</option>
-                    <option value="Electrodomesticos">Electrodomesticos</option>
-                    <option value="Instrumentos">Instrumentos</option>
-                    </select>
-                    <button type="submit" name="seleccion" class="boton">Enviar</button>
-                    </form>
+                
                 <div id="interfaz">
                     <a href="#">Contacto</a>
                 </div>
@@ -53,13 +46,28 @@
             <h2>PRODUCTOS</h2>
         </div>
 
-    <select id="sort">
-        <option value="precioAs">Precio Mayor a menor</option>
-        <option value="precioDesc">Precio Menor a Mayor</option>
-        <option value="fechaAs">Caducidad mas cercana</option>
-        <option value="fechaDes">Caducidad mas lejana</option>
-    </select>
-    
+        <div id="contenedor_categorias">
+        <form class="categoria" action="index.php" method="post">
+                        <select name="categorias">
+                        <option value="">Seccione una categoria</option>
+                        <option value="Electrodomesticos">Electrodomesticos</option>
+                        <option value="Instrumentos">Instrumentos</option>
+                        </select>
+            <button type="submit" name="seleccion" class="boton">Enviar</button>
+        </form>
+        
+            
+        <form>
+        <select id="sort">
+                <option value="precioAs">Precio Mayor a menor</option>
+                <option value="precioDesc">Precio Menor a Mayor</option>
+                <option value="fechaAs">Caducidad mas cercana</option>
+                <option value="fechaDes">Caducidad mas lejana</option>
+            </select>
+            <button type="submit" name="seleccion_filtro" class="boton">Enviar</button>
+         </form>
+     </div>
+
     <div>
         <!-- Consulta a la base-->
             <?php

@@ -145,9 +145,10 @@ button:hover{
     padding-bottom: 3em;
 }
 
-
-
-/*Pertenece a Login*/
+#contenedor_categorias form{
+    display: inline-block;
+    padding-left: 2em;
+}
 
 #inicio{
     margin: 0;
