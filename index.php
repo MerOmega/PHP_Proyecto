@@ -20,7 +20,7 @@
  <div class="cabecera">
          <h1>CompraBarato!</h1>
         <div class="buscador">
-        
+   
             <form > 
                 <input type="search" id="query" name="b" placeholder="Busca aqui..."> 
                 <button>Search</button>
@@ -46,7 +46,6 @@
         <div>
             <h2>PRODUCTOS</h2>
         </div>
-
         <div>
         <!-- Consulta a la base-->
             <?php
@@ -85,23 +84,71 @@
 
      <div>
         <!-- Consulta a la base-->
-                <div id="sorted">
-                <?php
-                 if(isset($_POST["seleccion"])){
-                    if(isset($_POST['categorias'])){
-                        $categoria=$_POST['categorias'];
-                        $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
-                        (P.idCategoriaProducto = C.idCategoriaProducto) WHERE (C.nombre = '$categoria')";
-                    }
-                }else{
-                 $sql= "SELECT * FROM productos ORDER BY idProducto";
-                }
-                 ?>
-                </div>
-                <?php
+                
+                <?php                 
+                
+                $sql= "SELECT COUNT(*) FROM productos ORDER BY idProducto";
+               
+
                 $result = $conn->query($sql);
-                ?>
+                $row = mysqli_fetch_row($result);
+               
+                $rows = $row[0];
+                $page_rows = 5;
+                $last = ceil($rows/$page_rows);
+                if($last<1){
+                    $last=1;
+                }
+                $pagenum =1;
+                if(isset($_GET['pn'])){
+                    $pagenum=preg_replace('#[^0-9]#','',$_GET['pn']);
+                }
+
+                if($pagenum<1){
+                    $pagenum=1;
+                }else if($pagenum>$last){
+                    $pagenum=$last;
+                }
+                $limit = 'LIMIT ' .($pagenum-1)*$page_rows.','.$page_rows;
+
+                $sql= "SELECT * FROM productos ORDER BY idProducto $limit";
+                
+                $result = $conn->query($sql);
+                $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
+                $paginCtrls='';
+                //mas de 1 pagina
+                if($last!=1){
+                    if($pagenum>1){
+                        $previo = $pagenum-1;
+                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previo.'">Previo</a> &nbsp; &nbsp; ';
+                        
+                        for($i=$pagenum-2;$i<$pagenum;$i++){
+                            if($i>0){
+                                $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a> &nbsp; ';
+                        
+                            }
+                        }
+
+                    }
+                    $paginCtrls.=''.$pagenum.' &nbsp; ';
+                    for($i=$pagenum+1;$i<=$last;$i++){
+                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a> &nbsp; ';
+                            if($i>=$pagenum+2){
+                                break;
+                            }
+                    }
+                    if($pagenum!=$last){
+                        $next =$pagenum+1;
+                        $paginCtrls .='&nbsp; &nbsp;<a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'">Siguiente</a> &nbsp; ';
+                        
+                    }
+                }
+                
+?>
+
     </div> 
+
+
     <div class="wrapper" > 
                 <?php
                 if ($result->num_rows > 0) {
@@ -124,9 +171,9 @@
                 }
                 
                 ?>                    
-    </div>
-    
-             
+    </div>    
+    <p> <?php echo $texto; ?> </p>
+    <div id="pag_control" ><?php echo $paginCtrls; ?></div>
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
         function cambioUsuario(){
@@ -137,13 +184,7 @@
         }
         cambioUsuario(sesionactual);
     </script>
-    <div>
-        <div class="mostrar">
-            <button type="button" id="showMore">Mostrar mas</button>
-            <button type="button" id="showLess">Mostrar Menos</button>
-        </div>
-    </div>
-    <script type="text/javascript" src="main.js"></script>
+    
 </main>
 </body>
 
