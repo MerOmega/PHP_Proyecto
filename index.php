@@ -16,6 +16,7 @@
 </head>
 <body>
 <header>
+<!---->
  <div class="cabecera">
          <h1>CompraBarato!</h1>
         <div class="buscador">
