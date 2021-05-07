@@ -85,7 +85,17 @@
      <div>
         <!-- Consulta a la base-->
                 <div id="sorted">
-                <?php $sql= "SELECT * FROM productos ORDER BY precio";?>
+                <?php
+                 if(isset($_POST["seleccion"])){
+                    if(isset($_POST['categorias'])){
+                        $categoria=$_POST['categorias'];
+                        $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
+                        (P.idCategoriaProducto = C.idCategoriaProducto) WHERE (C.nombre = '$categoria')";
+                    }
+                }else{
+                 $sql= "SELECT * FROM productos ORDER BY precio";
+                }
+                 ?>
                 </div>
                 <?php
                 $result = $conn->query($sql);
@@ -115,47 +125,7 @@
                 ?>                    
     </div>
     
-    <div>
-    <!-- Consulta a la base-->
-        <?php
-        if(isset($_POST["seleccion"])){
-            if(isset($_POST['categorias'])){
-                $categoria=$_POST['categorias'];
-                echo "$categoria";
-                $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
-                (P.idCategoriaProducto = C.idCategoriaProducto) WHERE (C.nombre = '$categoria')";
-            
-                 $result = $conn->query($sql);
-
-                if ($result->num_rows > 0) {
-            
-                while($row = $result->fetch_assoc()) {
-                ?>
-                    <div class="blackbox">
-                    <?php
-
-                    /*poner un if*/
-                        echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >';
-                        
-                        ?>
-                        <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row["idProducto"]?></p>
-                        <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
-                        <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
-                        <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
-                        
-                        
-                        ?>
-                    </div>
-                <?php
-               }
-                } else {
-                
-                }
-        }
-        } 
-            ?> 
-                               
-    </div>          
+             
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
         function cambioUsuario(){
