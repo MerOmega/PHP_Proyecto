@@ -1,5 +1,6 @@
 var item = document.querySelector(".wrapper");
 var limite= item.children.length;
+console.log(item);
 var limiteInf = 5;
 var i = limiteInf;
 /*Evalua que elemento ya caduco, si estan caducados los elimina*/
@@ -21,8 +22,6 @@ function evaluarCaducidad(index){
     var y = today.getFullYear();
     today = y + '-' + m + '-' + d;
     today=today.split("-");
-    
-
     for (j=0; j<limite;j++){
         /**Comparo la fecha convirtiendo el ultimo hijo, es decir <p> que no es visible en la pagina, lo convierto a un arreglo */
         var res=caduco[j].lastElementChild.textContent.split("-");

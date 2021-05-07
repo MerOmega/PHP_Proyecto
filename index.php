@@ -82,13 +82,8 @@
          </form>
      </div>
 
-    
-    <div class="wrapper" > 
-    <div>
+     <div>
         <!-- Consulta a la base-->
-            <?php
-                require('coneccion.php'); //enlazo la base
-                ?>
                 <div id="sorted">
                 <?php $sql= "SELECT * FROM productos ORDER BY precio";?>
                 </div>
@@ -96,6 +91,7 @@
                 $result = $conn->query($sql);
                 ?>
     </div> 
+    <div class="wrapper" > 
                 <?php
                 if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -103,10 +99,9 @@
                     <div class="blackbox">
                     <?php
                             echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" >';
-                            
                             ?>
                             <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
-                            <div style="display: none;" class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
+                            <div class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
                             <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
                             <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
                             ?>
@@ -124,7 +119,6 @@
     <!-- Consulta a la base-->
         <?php
         if(isset($_POST["seleccion"])){
-            require('coneccion.php'); //enlazo la base
             if(isset($_POST['categorias'])){
                 $categoria=$_POST['categorias'];
                 echo "$categoria";
@@ -155,7 +149,7 @@
                 <?php
                }
                 } else {
-                    echo "0 results";
+                
                 }
         }
         } 
