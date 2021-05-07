@@ -17,18 +17,30 @@ function evaluarCaducidad(index){
     var vendido = document.querySelectorAll(".disponible");
     /*Obtengo la fecha actual */
     var today = new Date();
-    var d = String(today.getDate()).padStart(2, '0');
-    var m = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    var y = today.getFullYear();
-    today = y + '-' + m + '-' + d;
-    today=today.split("-");
+    var DiaHoy = parseInt(String(today.getDate()).padStart(2, '0'));
+    var MesHoy =  parseInt( String(today.getMonth() + 1).padStart(2, '0'));
+    var AnyoHoy = today.getFullYear();   
     for (j=0; j<limite;j++){
         /**Comparo la fecha convirtiendo el ultimo hijo, es decir <p> que no es visible en la pagina, lo convierto a un arreglo */
         var res=caduco[j].lastElementChild.textContent.split("-");
         var nodo = caduco[j].parentElement;
-        if( parseInt( res[0]) < parseInt(today[0]) || parseInt( res[1]) < parseInt(today[1]) || parseInt( res[2]) < parseInt(today[2]) ){
-            nodo.remove();  
-        }else if(vendido[j].lastElementChild.textContent!=""){
+        var AnyoFecha=parseInt(res[0]);
+        var MesFecha=parseInt(res[1]);
+        var DiaFecha=parseInt(res[2]);
+    if (AnyoFecha < AnyoHoy){
+        nodo.remove();
+    }
+    else{
+        if ( (AnyoFecha == AnyoHoy) && (MesFecha < MesHoy)){
+            nodo.remove();			
+        }
+        else{
+            if ((AnyoFecha == AnyoHoy) && (MesFecha == MesHoy) && (DiaFecha < DiaHoy)){
+                nodo.remove();
+            }
+        }
+    }
+    if(vendido[j].lastElementChild.textContent!=""){
             nodo.remove();
         }
     }

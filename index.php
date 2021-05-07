@@ -94,7 +94,7 @@
                         (P.idCategoriaProducto = C.idCategoriaProducto) WHERE (C.nombre = '$categoria')";
                     }
                 }else{
-                 $sql= "SELECT * FROM productos ORDER BY precio";
+                 $sql= "SELECT * FROM productos ORDER BY idProducto";
                 }
                  ?>
                 </div>
