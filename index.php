@@ -10,9 +10,7 @@
     if(!isset($_SESSION['sort_user_defined'])){
         $_SESSION['sort_user_defined']='ORDER BY precio DESC';
     }
-?>
 
-<?php
 function procesoFiltroSort(){
     switch($_SESSION['sort_user']){
         case "precioAs":
@@ -93,7 +91,7 @@ function procesoFiltroCategory($var1){
     </div> 
 
         <div id="contenedor_categorias">
-            <form action="index.php" method="get">
+            <form action="index.php" method="post">
                             <select name="categorias">
                             <option value="show_all">Todas las categorias</option>
                             <?php while($datos=mysqli_fetch_array( $result )){ ?>
@@ -104,8 +102,8 @@ function procesoFiltroCategory($var1){
             </form>
             
                 
-            <form>
-            <form action="index.php" method="get" >
+            
+            <form action="index.php" method="post" >
                 <select name="sort" >
                         <option value="precioAs">Precio Mayor a menor</option>
                         <option value="precioDesc">Precio Menor a Mayor</option>
@@ -114,19 +112,19 @@ function procesoFiltroCategory($var1){
                     </select>
                     <button type="submit" class="boton">Enviar</button>
                 </form>
-            </form>
+            
      </div>
 
      <div>
          <!-- Consulta a la base-->          
                 <?php 
-                if(isset($_GET['sort'])){
-                    $_SESSION['sort_user']=$_GET['sort']; 
+                if(isset($_POST['sort'])){
+                    $_SESSION['sort_user']=$_POST['sort']; 
                     procesoFiltroSort();
                 }
-                if(isset($_GET['categorias'])){
-                    $_SESSION['category_user']=$_GET['categorias'];
-                    procesoFiltroCategory($_GET['categorias']);
+                if(isset($_POST['categorias'])){
+                    $_SESSION['category_user']=$_POST['categorias'];
+                    procesoFiltroCategory($_POST['categorias']);
                 }
 
                 if(isset($_SESSION['category_user'])){
