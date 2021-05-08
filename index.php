@@ -2,11 +2,44 @@
 <html>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 
-<?php session_start(); 
+<?php 
+    session_start(); 
     if(!isset($_SESSION['nombredeusuario'])){
             $_SESSION['nombredeusuario']="Invitado";
     }
+    if(!isset($_SESSION['sort_user_defined'])){
+        $_SESSION['sort_user_defined']='ORDER BY precio DESC';
+    }
 ?>
+
+<?php
+function procesoFiltroSort(){
+    switch($_SESSION['sort_user']){
+        case "precioAs":
+            $_SESSION['sort_user_defined']='ORDER BY precio DESC';
+                    break;
+            case "precioDesc":
+                $_SESSION['sort_user_defined']='ORDER BY precio ASC';
+                break;
+            case "fechaAs":
+                $_SESSION['sort_user_defined']='ORDER BY caducidad ASC';
+                    break;
+            case "fechaDes":
+                $_SESSION['sort_user_defined']='ORDER BY caducidad DESC';
+                    break;
+    }
+}
+function procesoFiltroCategory($var1){
+    if($_SESSION['category_user']=="show_all"){
+        $_SESSION['category_user']='';
+    }
+    else{
+        $_SESSION['category_user'] = "WHERE (C.nombre ='$var1') AND (P.idUsuarioComprador<=>NULL)";
+    }
+}
+
+?>
+
 <head>
     <title>
         Compra Barato
@@ -60,58 +93,93 @@
     </div> 
 
         <div id="contenedor_categorias">
-        <form action="index.php" method="post">
-                        <select name="categorias">
-                        <option value="">Todas las categorias</option>
-                        <?php while($datos=mysqli_fetch_array( $result )){ ?>
-                        <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
-                        <?php } ?>
-                        </select>
-            <button type="submit" name="seleccion" class="boton">Enviar</button>
-        </form>
-        
+            <form action="index.php" method="get">
+                            <select name="categorias">
+                            <option value="show_all">Todas las categorias</option>
+                            <?php while($datos=mysqli_fetch_array( $result )){ ?>
+                            <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
+                            <?php } ?>
+                            </select>
+                <button type="submit" class="boton">Enviar</button>
+            </form>
             
-        <form>
-        <select id="sort">
-                <option value="precioAs">Precio Mayor a menor</option>
-                <option value="precioDesc">Precio Menor a Mayor</option>
-                <option value="fechaAs">Caducidad mas cercana</option>
-                <option value="fechaDes">Caducidad mas lejana</option>
-            </select>
-            <button type="submit" name="seleccion_filtro" class="boton">Enviar</button>
-         </form>
+                
+            <form>
+            <form action="index.php" method="get" >
+                <select name="sort" >
+                        <option value="precioAs">Precio Mayor a menor</option>
+                        <option value="precioDesc">Precio Menor a Mayor</option>
+                        <option value="fechaAs">Caducidad mas cercana</option>
+                        <option value="fechaDes">Caducidad mas lejana</option>
+                    </select>
+                    <button type="submit" class="boton">Enviar</button>
+                </form>
+            </form>
      </div>
 
      <div>
-        <!-- Consulta a la base-->
-                
-                <?php                 
-                
-                $sql= "SELECT COUNT(*) FROM productos ORDER BY idProducto";
-               
+         <!-- Consulta a la base-->          
+                <?php 
+                if(isset($_GET['sort'])){
+                    $_SESSION['sort_user']=$_GET['sort']; 
+                    procesoFiltroSort();
+                }
+                if(isset($_GET['categorias'])){
+                    $_SESSION['category_user']=$_GET['categorias'];
+                    procesoFiltroCategory($_GET['categorias']);
+                }
 
+                if(isset($_SESSION['category_user'])){
+                        $categoria=$_SESSION['category_user'];
+                        $string=$_SESSION['sort_user_defined'];
+                        $sql= "SELECT COUNT(*)FROM productos P INNER JOIN categorias_productos C ON 
+                        (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string";  
+                }else{
+                $string=$_SESSION['sort_user_defined'];
+                $sql= "SELECT COUNT(*) FROM productos WHERE (idUsuarioComprador<=>NULL) $string";       
+                }
+                
+
+                //obtengo la cantidad total de elementos 
                 $result = $conn->query($sql);
                 $row = mysqli_fetch_row($result);
                
                 $rows = $row[0];
+                echo "Cantidad de productos: ".$rows;
+                //Cantidad de elementos a mostrar
                 $page_rows = 5;
+                //Saco la cuenta de cuantas paginas voy a mostrar, ceil redondea
                 $last = ceil($rows/$page_rows);
+                //Tengo solamente una pagina para mostrar
                 if($last<1){
                     $last=1;
                 }
+                //Arranca en la pagina 1
                 $pagenum =1;
+                //Filtro para que no escriban algo distinto de numeros
                 if(isset($_GET['pn'])){
                     $pagenum=preg_replace('#[^0-9]#','',$_GET['pn']);
                 }
-
+                //Controla que no se salga de rango
                 if($pagenum<1){
                     $pagenum=1;
                 }else if($pagenum>$last){
                     $pagenum=$last;
                 }
-                $limit = 'LIMIT ' .($pagenum-1)*$page_rows.','.$page_rows;
+                //Saltea y muestra los proximos 5
+                $saltea=($pagenum-1)*$page_rows;
 
-                $sql= "SELECT * FROM productos ORDER BY idProducto $limit";
+                $limit = 'LIMIT ' .$saltea.','.$page_rows;
+
+                if(isset($_SESSION['category_user'])){
+                        $categoria=$_SESSION['category_user'];
+                        $string=$_SESSION['sort_user_defined'];
+                        $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
+                        (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string $limit";           
+                }else{
+                    $string= $_SESSION['sort_user_defined'];
+                    $sql= "SELECT * FROM productos WHERE (idUsuarioComprador<=>NULL) $string $limit";
+                }
                 
                 $result = $conn->query($sql);
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
@@ -139,8 +207,8 @@
                     }
                     if($pagenum!=$last){
                         $next =$pagenum+1;
-                        $paginCtrls .='&nbsp; &nbsp;<a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'">Siguiente</a> &nbsp; ';
-                        
+                         $paginCtrls .='&nbsp; &nbsp;<a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'">Siguiente</a> &nbsp; ';
+
                     }
                 }
                 

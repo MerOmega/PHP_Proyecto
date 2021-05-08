@@ -44,7 +44,11 @@ form button{
     text-align: center;
     background-color: orange;
     
-    
+}
+
+form button:hover{
+    background-color: rgba(122, 88, 13, 0.719);
+    transition: 0.3s;
 }
 
 button:hover{
