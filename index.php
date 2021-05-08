@@ -100,9 +100,6 @@ function procesoFiltroCategory($var1){
                             </select>
                 <button type="submit" class="boton">Enviar</button>
             </form>
-            
-                
-            
             <form action="index.php" method="post" >
                 <select name="sort" >
                         <option value="precioAs">Precio Mayor a menor</option>
@@ -238,7 +235,9 @@ function procesoFiltroCategory($var1){
                 
                 ?>                    
     </div>    
+
     <p> <?php echo $texto; ?> </p>
+
     <div id="pag_control" ><?php echo $paginCtrls; ?></div>
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
@@ -246,7 +245,6 @@ function procesoFiltroCategory($var1){
             if(sesionactual!="Invitado"){
                 $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
             }
-            
         }
         cambioUsuario(sesionactual);
     </script>

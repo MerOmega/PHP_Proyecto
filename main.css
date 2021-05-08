@@ -134,7 +134,7 @@ button:hover{
     background-color: rgba(97, 97, 105, 0.1);
     max-width: max-content;
     transition: 0.3s;
-    
+    justify-self: center;
 }
 
 
@@ -166,6 +166,14 @@ button:hover{
      
 }
 
+/*Paginacion*/
 
+#pag_control{
+    
+}
+
+#pag_control a{
+    text-decoration: none;
+}
 
 
