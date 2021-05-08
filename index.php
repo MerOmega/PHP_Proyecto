@@ -183,26 +183,26 @@ function procesoFiltroCategory($var1){
                 if($last!=1){
                     if($pagenum>1){
                         $previo = $pagenum-1;
-                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previo.'">Previo</a> &nbsp; &nbsp; ';
+                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$previo.'">Previo</a>';
                         
                         for($i=$pagenum-2;$i<$pagenum;$i++){
                             if($i>0){
-                                $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a> &nbsp; ';
+                                $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a>';
                         
                             }
                         }
 
                     }
-                    $paginCtrls.=''.$pagenum.' &nbsp; ';
+                    $paginCtrls.=''.$pagenum.'';
                     for($i=$pagenum+1;$i<=$last;$i++){
-                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a> &nbsp; ';
+                        $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a>';
                             if($i>=$pagenum+2){
                                 break;
                             }
                     }
                     if($pagenum!=$last){
                         $next =$pagenum+1;
-                         $paginCtrls .='&nbsp; &nbsp;<a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'">Siguiente</a> &nbsp; ';
+                         $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$next.'">Siguiente</a>';
 
                     }
                 }
