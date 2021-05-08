@@ -39,15 +39,37 @@
         </nav>
     </div>
 </header>
-<?php
 
+<?php
     if(isset($_GET['id'])){
         echo $_GET['id'];
+        $id=$_GET['id'];
+        require('coneccion.php');
+        $sql= "SELECT nombre FROM productos";
+        $result = $conn->query($sql);
+        if($result->num_row > 0){
+            while ($row = $result->fetch_assoc()){
+                ?>
+                <?php
+                $nombre=$row['nombre'];
+                echo "$nombre";
+                $precio=$row["precio"];
+                $publicacion=$row["publicacion"];
+                $caducidad=$row["caducidad"];
+                $imagen=$row["contenidoimagen"];
+               
+            }
+            
+        }else{
+            echo "0 results";
+        }
+        ?>
+        <?php
     }else{
         echo "No encontre el ID";
     }
-
 ?>
+
 
 
     <script type="text/javascript">  
