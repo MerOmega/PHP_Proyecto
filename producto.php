@@ -45,7 +45,7 @@
         echo $_GET['id'];
         $id=$_GET['id'];
         require('coneccion.php');
-        $sql= "SELECT nombre FROM productos";
+        $sql= "SELECT nombre FROM productos WHERE (idProducto = '$id')";
         $result = $conn->query($sql);
         if($result->num_row > 0){
             while ($row = $result->fetch_assoc()){
