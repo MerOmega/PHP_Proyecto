@@ -168,17 +168,32 @@ button:hover{
 
 /*Paginacion*/
 
-#pag_control{
-    
-}
-
 #pag_control a{
     text-decoration: none;
-    border: 1px solid black;
+    border: 1px thin white;
+    border-radius: 6px;
+    background-color: rgb(69, 69, 240);
+    color: white;
     padding-left:1em;
     padding-right: 1em;
+    margin-left: 2px;
+    margin-right: 2px;
 }
 
-a:visited { text-decoration: none; 
-    
+#pag_control a:hover{
+    background-color: rgba(69, 69, 240, 0.664);
+    transition:0.3s;
+}
+#pag_control p{
+    display: inline;
+    padding-left: 1em;
+    padding-right: 1em;
+    color: white;
+    background-color:rgba(11, 11, 53, 0.76);
+    border:1px;
+    border-radius: 3px;
+}
+
+a:visited {
+     text-decoration: none;  
 }

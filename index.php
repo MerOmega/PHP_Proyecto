@@ -140,7 +140,7 @@ function procesoFiltroCategory($var1){
                 $row = mysqli_fetch_row($result);
                
                 $rows = $row[0];
-                echo "Cantidad de productos: ".$rows;
+                echo "<br>Cantidad de productos: ".$rows;
                 //Cantidad de elementos a mostrar
                 $page_rows = 5;
                 //Saco la cuenta de cuantas paginas voy a mostrar, ceil redondea
@@ -193,7 +193,7 @@ function procesoFiltroCategory($var1){
                         }
 
                     }
-                    $paginCtrls.=''.$pagenum.'';
+                    $paginCtrls.='<p>'.$pagenum.'</p>';
                     for($i=$pagenum+1;$i<=$last;$i++){
                         $paginCtrls .='<a href="'.$_SERVER['PHP_SELF'].'?pn='.$i.'">'.$i.'</a>';
                             if($i>=$pagenum+2){
