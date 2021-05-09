@@ -63,16 +63,18 @@
                 }
             }
         ?>
-
-        <form action="search.php" method="post" >
-                <select name="sort" >
-                        <option value="precioAs">Precio Mayor a menor</option>
-                        <option value="precioDesc">Precio Menor a Mayor</option>
-                        <option value="fechaAs">Caducidad mas cercana</option>
-                        <option value="fechaDes">Caducidad mas lejana</option>
-                    </select>
-                    <button type="submit" class="boton">Seleccionar</button>
-          </form>
+        <?php if(isset($_SESSION['buscador'])){
+           echo "<form action='search.php' method='post' >
+                    <select name='sort' >
+                            <option value='precioAs'>Precio Mayor a menor</option>
+                            <option value='precioDesc'>Precio Menor a Mayor</option>
+                            <option value='fechaAs'>Caducidad mas cercana</option>
+                            <option value='fechaDes'>Caducidad mas lejana</option>
+                        </select>
+                        <button type='submit' class='boton'>Seleccionar</button>
+            </form>";
+            }
+        ?>
           <?php 
             require("paginacionSearch.php");
         ?>
@@ -92,10 +94,7 @@
                         </div>
                     <?php
                 }
-                } else {
-                echo "0 results";
-                }
-                
+                }                 
                 ?> 
         </div>
 
