@@ -42,29 +42,28 @@
 
 <?php
     if(isset($_GET['id'])){
-        echo $_GET['id'];
         $id=$_GET['id'];
         require('coneccion.php');
-        $sql= "SELECT nombre FROM productos WHERE (idProducto = '$id')";
+
+        $sql= "SELECT * FROM productos WHERE (idProducto = '$id')";
+
         $result = $conn->query($sql);
-        if($result->num_row > 0){
+        if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()){
-                ?>
-                <?php
+                
                 $nombre=$row['nombre'];
-                echo "$nombre";
                 $precio=$row["precio"];
                 $publicacion=$row["publicacion"];
                 $caducidad=$row["caducidad"];
                 $imagen=$row["contenidoimagen"];
+                echo '<div class="imagen_prod"><img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="100px; height=150" ></div>';
                
             }
             
         }else{
             echo "0 results";
         }
-        ?>
-        <?php
+        
     }else{
         echo "No encontre el ID";
     }
