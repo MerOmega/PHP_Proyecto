@@ -1,6 +1,7 @@
 <!doctype html>
 <html>
 <?php session_start(); ?>
+<script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <head>
     <title>
         Compra Barato
@@ -44,15 +45,17 @@
         //verifica si el usuario realizo un clic en el boton buscar
             if(isset($_POST['submit-search'])){
                     //se verifica que no se haya enviado un nombre vacio
-                    if($_POST['buscador']!=""){
+                    if(!empty($_POST['buscador'])){
                         $_SESSION['submited']=$_POST['submit-search']; //guarda el valor del form en una sesion
                         $_SESSION['buscador']=$_POST['buscador']; //guarda el nombre del producto buscado en una sesion
                         $search = $conn->real_escape_string($_SESSION['buscador']); //Filtra characteres para usar en la consulta
+                        $date=date('Y-m-d');
                         //consulta que filtra los productos que contengan el nombre buscado y que no esten comprados
-                        $sql= "SELECT * FROM productos WHERE (nombre LIKE '%$search%') AND (idUsuarioComprador<=>NULL)";
+                        $sql= "SELECT * FROM productos WHERE (nombre LIKE '%$search%') AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
                         $result=$conn->query($sql);
                     }else{
                         echo "<p>Ningun resultado que mostrar</p>";
+                        unset($_SESSION['buscador']);
                     }
             }else{
                 if(!isset( $_SESSION['submited'])){

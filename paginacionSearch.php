@@ -30,12 +30,15 @@
                     $_SESSION['sort_user']=$_POST['sort']; 
                     procesoFiltroSort();  //se procesa que orden eligió el usuario
                 }
-                
-                $string=$_SESSION['sort_user_defined'];
-                $search = $conn->real_escape_string($_SESSION['buscador']);
-                $date=date('Y-m-d');
-                //consulta sql que busca en la bd 
-                $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";       
+                if(!isset($_SESSION['buscador'])){
+                    $sql="SELECT COUNT(1) from dual WHERE false";
+                }else{
+                    $string=$_SESSION['sort_user_defined'];
+                    $search = $conn->real_escape_string($_SESSION['buscador']);
+                    $date=date('Y-m-d');
+                    //consulta sql que busca en la bd 
+                    $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";  
+                }     
                 //obtengo la cantidad total de elementos 
                 $result = $conn->query($sql);
                 $row = mysqli_fetch_row($result);
@@ -67,13 +70,20 @@
 
                 $limit = 'LIMIT ' .$saltea.','.$page_rows;
 
-                
-                $string= $_SESSION['sort_user_defined'];
-                $search = $conn->real_escape_string($_SESSION['buscador']);
-                $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
+                if(!isset($_SESSION['buscador'])){
+                    $sql="SELECT 1 from dual WHERE false";
+                }else{
+                    $string= $_SESSION['sort_user_defined'];
+                    $search = $conn->real_escape_string($_SESSION['buscador']);
+                    $date=date('Y-m-d');
+                    $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
+                }
                 $result = $conn->query($sql);
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
                 $paginCtrls='';
+
+                
+
                 //mas de 1 pagina
                 if($last!=1){
                     if($pagenum>1){
