@@ -24,9 +24,7 @@
                                 $_SESSION['sort_user_defined']='ORDER BY caducidad DESC';
                                     break;
                     }
-                }
-                
-                
+                } 
                 //si el usuario eligió y envió un orden se guarda en la sesion sort_user  
                 if(isset($_POST['sort'])){
                     $_SESSION['sort_user']=$_POST['sort']; 
@@ -72,7 +70,6 @@
                 
                 $string= $_SESSION['sort_user_defined'];
                 $search = $conn->real_escape_string($_SESSION['buscador']);
-                echo "$date";
                 $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
                 $result = $conn->query($sql);
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
