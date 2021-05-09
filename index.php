@@ -7,13 +7,16 @@
     if(!isset($_SESSION['nombredeusuario'])){
             $_SESSION['nombredeusuario']="Invitado";
     }
+    //si no se elige un orden para mostrar el listado, por defecto los ordena por precio desc
     if(!isset($_SESSION['sort_user_defined'])){
         $_SESSION['sort_user_defined']='ORDER BY precio DESC';
     }
     
-function procesoFiltroSort(){
+//funcion que se encarga de obtener el order elegido por el usuario y guardarlo en una sesion
+    function procesoFiltroSort(){
     switch($_SESSION['sort_user']){
         case "precioAs":
+            //se guarda parte de la consulta sql para luego aplicar el orden en la consulta general
             $_SESSION['sort_user_defined']='ORDER BY precio DESC';
                     break;
             case "precioDesc":
@@ -27,14 +30,16 @@ function procesoFiltroSort(){
                     break;
     }
 }
+//funcion que procesa la categoria elegida por el usuario
 function procesoFiltroCategory($var1){
     $date=date('Y-m-d');
+    //se verifica si el usuario elige nuevamente ver todos los productos
     if($_SESSION['category_user']=="show_all"){
-       
+       //se muestran los productos no caducados y no comprados
         $_SESSION['category_user']="WHERE (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
     }
     else{
-
+        //si no se buscará en la bd los productos de la categoria var1
         $_SESSION['category_user'] = "WHERE (C.nombre ='$var1') AND (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
     }
 }
@@ -57,7 +62,7 @@ function procesoFiltroCategory($var1){
    
             <form action="search.php" method="POST"> 
                 <input type="text" name="buscador" placeholder="Busca aqui..."> 
-                <button type="submit" name="submit-search">Search</button>
+                <button type="submit" name="submit-search">Buscar</button>
             </form>
         </div>
   </div>
@@ -86,13 +91,17 @@ function procesoFiltroCategory($var1){
                 require('BD.php'); //enlazo la base
                 ?>
                 <div id="sorted">
-                <?php $sql= "SELECT * FROM categorias_productos";?>
+                <?php 
+                //consulta sql para obtener todas las categorias de productos
+                $sql= "SELECT * FROM categorias_productos";?>
                 </div>
                 <?php
+                //busqueda en la bd de la consulta sql
                 $result = $conn->query($sql);
                 ?>
     </div> 
 
+        <!--Fomulario seleccionador para elegir categorias-->
         <div id="contenedor_categorias">
             <form action="index.php" method="post">
                             <select name="categorias">
@@ -103,6 +112,8 @@ function procesoFiltroCategory($var1){
                             </select>
                 <button type="submit" class="boton">Enviar</button>
             </form>
+
+             <!--Fomulario seleccionador para elegir el metodo de orden de los productos-->
             <form action="index.php" method="post" >
                 <select name="sort" >
                         <option value="precioAs">Precio Mayor a menor</option>
@@ -115,20 +126,24 @@ function procesoFiltroCategory($var1){
             
      </div>
 
-     <div>
-         <!-- Consulta a la base-->          
+     <div>      
+         <!--Para realizar la paginación de los productos se llama al archivo paginación.php-->  
+         <!-- Consulta a la base-->  
                <?php require('paginacion.php');?>
 
     </div> 
 
-
+ <!--Contenedor que contiene el listado de productos-->
     <div class="wrapper" > 
                 <?php
+                //Si el numero de filas es mayor a 0, se obtuvieron filas de la consulta sql previa
                 if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
                    ?>
+                   <!--Contenedor que contiene cada producto del listado-->
                     <div class="blackbox">
                     <?php
+                            //link <a> integrado a la imagen y que redirecciona a la vista con detalle del producto
                             echo '<a href="producto.php?id='.$row["idProducto"].'"><img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" ></a>';
                             ?>
                             <p><?php echo "Articulo: " . $row["nombre"]?></p>
@@ -148,6 +163,7 @@ function procesoFiltroCategory($var1){
     <p> <?php echo $texto; ?> </p>
 
     <div id="pag_control" ><?php echo $paginCtrls; ?></div>
+
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
         function cambioUsuario(){

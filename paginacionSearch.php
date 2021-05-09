@@ -1,7 +1,14 @@
 <?php 
-                 if(!isset($_SESSION['sort_user_defined'])){
+//Archivo dedicado a la paginación del listado obtenido por la busqueda del usuario de un producto por nombre
+
+                //si el orden no es definido por el usuario,
+                //se guarda en una sesion un orden por defecto
+                if(!isset($_SESSION['sort_user_defined'])){
                     $_SESSION['sort_user_defined']='ORDER BY precio DESC';
                 }
+
+                //funcion que se encarga de obtener y
+                //guardar en una sesion la condicion sql requerida para el orden elegido por el usuario
                 function procesoFiltroSort(){
                     switch($_SESSION['sort_user']){
                         case "precioAs":
@@ -20,15 +27,16 @@
                 }
                 
                 
-                
+                //si el usuario eligió y envió un orden se guarda en la sesion sort_user  
                 if(isset($_POST['sort'])){
                     $_SESSION['sort_user']=$_POST['sort']; 
-                    procesoFiltroSort();
+                    procesoFiltroSort();  //se procesa que orden eligió el usuario
                 }
                 
                 $string=$_SESSION['sort_user_defined'];
                 $search = $conn->real_escape_string($_SESSION['buscador']);
                 $date=date('Y-m-d');
+                //consulta sql que busca en la bd 
                 $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";       
                 //obtengo la cantidad total de elementos 
                 $result = $conn->query($sql);

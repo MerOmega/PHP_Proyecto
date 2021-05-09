@@ -39,14 +39,17 @@
         </div>
         
         <?php
+        //conexion con la bd
         require('BD.php');
+        //verifica si el usuario realizo un clic en el boton buscar
             if(isset($_POST['submit-search'])){
+                    //se verifica que no se haya enviado un nombre vacio
                     if($_POST['buscador']!=""){
-                        //Filtra characteres 
-                        $_SESSION['submited']=$_POST['submit-search'];
-                        $_SESSION['buscador']=$_POST['buscador'];
-                        $search = $conn->real_escape_string($_SESSION['buscador']);
-                        $sql= "SELECT * FROM productos WHERE nombre LIKE '%$search%' OR descripcion LIKE '%$search%' AND (idUsuarioComprador<=>NULL)";
+                        $_SESSION['submited']=$_POST['submit-search']; //guarda el valor del form en una sesion
+                        $_SESSION['buscador']=$_POST['buscador']; //guarda el nombre del producto buscado en una sesion
+                        $search = $conn->real_escape_string($_SESSION['buscador']); //Filtra characteres para usar en la consulta
+                        //consulta que filtra los productos que contengan el nombre buscado y que no esten comprados
+                        $sql= "SELECT * FROM productos WHERE (nombre LIKE '%$search%') AND (idUsuarioComprador<=>NULL)";
                         $result=$conn->query($sql);
                     }else{
                         echo "<p>Ningun resultado que mostrar</p>";

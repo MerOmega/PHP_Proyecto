@@ -44,9 +44,12 @@
 </header>
 
 <?php
+//se verifica si el usuario realizo clic en la imagen del producto desde el listado 
+    //si se recibio el id del producto
     if(isset($_GET['id'])){
         $id=$_GET['id'];
         require('BD.php');
+        //se busca en la bd y se obtienen todos sus datos
         $sql= "SELECT * FROM productos WHERE (idProducto = '$id')";
         $result = $conn->query($sql);
         if($result->num_rows > 0){
@@ -71,6 +74,7 @@
 ?>
 
     <?php 
+            //se busca en la bd el nombre de la categoria del producto detallado
             $sql="SELECT * FROM categorias_productos WHERE (idCategoriaProducto='$idCategoria')";
             $result = $conn->query($sql);
             if($result->num_rows > 0){
@@ -78,7 +82,7 @@
                     $nombreCat=$row['nombre'];               
                 }
             }
-            
+            //se busca en la bd el nombre del usuario vendedor del producto
             $sql="SELECT * FROM usuarios WHERE (idUsuario='$idVendedor')";
             $result = $conn->query($sql);
             if($result->num_rows > 0){

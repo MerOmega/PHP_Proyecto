@@ -11,11 +11,19 @@
 <body>
 <header>
 <div class="cabecera">
+<header>
+        <div class="cabecera">
+        <nav class="main-nav">
+                <a href="index.php">Inicio</a>
+                <a href="#">Contacto</a>
+        </nav>
+        </div>
     <h2 style="text-align:center;">Registro</h2>
 </div>
 </header>
+ 
+ <!-- formulario de ingreso de datos para el registro del usuario-->
  <div>
-
  <form id="formulario" style="text-align:center;" name="registro" action="registrar.php" method="POST" novalidate>
 
     <input type="text" name="user" placeholder="Ingrese nombre de usuario"><br><br>
@@ -29,12 +37,14 @@
 
 </form>
 
-<a href="index.php">Inicio</a>
+
 
 </div>
 
         <?php
+        //se verifica que haya enviado el formulario
         if(isset($_POST["submit"])){
+            //se verifica que los campos no esten vacios 
         if(!empty($_POST["user"]) && !empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["clave"]) && !empty($_POST["email"]) && !empty($_POST["telefono"])){
             require('BD.php');
             $usuario=$_POST['user'];
@@ -43,6 +53,7 @@
             $clave= $_POST['clave'];
             $email=$_POST['email'];
             $telefono=$_POST['telefono'];
+           //se realiza con consulta sql y se guarda en la tabla usuarios de la bd el nuevo usuario 
             $sql= "INSERT INTO usuarios (nombredeusuario, clave, apellido, nombre, email, telefono)
             VALUES ('$usuario','$nombre','$apellido','$clave','$email','$telefono')";
             if($conn->query($sql) === true){
@@ -60,10 +71,12 @@
             }
             }
             else{
+                //si no completa todos los campos no se realiza el alta en la bd
                 echo "complete todos los campos";
             }
         }
         ?>
+    <!-- se validan los campos del formulario registro con javascript -->
     <script type="text/javascript" src="validar.js"></script>
 
 </body>

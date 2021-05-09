@@ -1,21 +1,34 @@
 <?php 
-                if(isset($_POST['sort'])){
-                    $_SESSION['sort_user']=$_POST['sort']; 
+//archivo dedicado a la paginacion de los productos luego de filtrar por categoria o al realizar un orden
+
+               //si el usuario seleccionó un orden, verifica que lo hizo
+               if(isset($_POST['sort'])){
+                 //se guarda el orden seleccionado en una sesion  
+                    $_SESSION['sort_user']=$_POST['sort'];
+                    //se procesa el orden enviado para saber cual fue 
                     procesoFiltroSort();
                 }
+                //si el usuario seleccionó una categoria, verifica que lo hizo
                 if(isset($_POST['categorias'])){
+                    //se guarda la categoria elegida en una sesion
                     $_SESSION['category_user']=$_POST['categorias'];
+                    //se procesa la categoria elegida para saber cual fue
                     procesoFiltroCategory($_POST['categorias']);
                 }
-
+                
+                //verifica que este definida la categoria a buscar 
                 if(isset($_SESSION['category_user'])){
+                    //guarda en las variables categoria y string las condiciones de la consulta sql
                         $categoria=$_SESSION['category_user'];
                         $string=$_SESSION['sort_user_defined'];
+                        //se realiza la consulta sql para buscar en la bd los productos con la categoria solicitada y en orden
                         $sql= "SELECT COUNT(*)FROM productos P INNER JOIN categorias_productos C ON 
                         (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string";  
                 }else{
+                //si no hay una categoria seleccionada ordena por el orden definido por defecto
                 $string=$_SESSION['sort_user_defined'];
                 $date=date('Y-m-d');
+                //consulta sql que filtra los productos que no hayan sido comprados y no esten caducados, y ordenados por 
                 $sql= "SELECT COUNT(*) FROM productos WHERE (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";       
                 }
                 
@@ -51,18 +64,21 @@
 
                 $limit = 'LIMIT ' .$saltea.','.$page_rows;
 
+                //se fija si hay una categoria seleccionada
                 if(isset($_SESSION['category_user'])){
                         $categoria=$_SESSION['category_user'];
                         $string=$_SESSION['sort_user_defined'];
+                        //realiza la consulta y los limita para mostrar 5 por pagina
                         $sql= "SELECT P.*FROM productos P INNER JOIN categorias_productos C ON 
                         (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string $limit";           
                 }else{
                     $string= $_SESSION['sort_user_defined'];
                     $date=date('Y-m-d');
+                    //realiza la consulta y los limita para mostrar 5 por pagina
                     $sql= "SELECT * FROM productos WHERE (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
                 }
                 
-                $result = $conn->query($sql);
+                $result = $conn->query($sql); //resultado de la consultado procesado en el index.php
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
                 $paginCtrls='';
                 //mas de 1 pagina
