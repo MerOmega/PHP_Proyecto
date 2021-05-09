@@ -56,7 +56,7 @@
                 $publicacion=$row["publicacion"];
                 $caducidad=$row["caducidad"];
                 $imagen=$row["contenidoimagen"];
-                echo '<div class="imagen_prod"><img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="100px; height=150" ></div>';
+                
                
             }
             
@@ -68,8 +68,14 @@
         echo "No encontre el ID";
     }
 ?>
+<div class="contenedor_imagen">
+<?php
 
-
+    echo '<div class="imagen_prod"><p>'.$nombre.'</p>';
+    echo '<img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="100px; height=150" ></div>';
+    
+?>
+</div>
 
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 

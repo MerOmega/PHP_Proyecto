@@ -197,3 +197,20 @@ button:hover{
 a:visited {
      text-decoration: none;  
 }
+
+
+/*Productos*/
+.contenedor_imagen{
+    display: grid;
+    text-align: center;
+    padding-top: 5em;
+    
+}
+
+.imagen_prod{
+    padding:3em;
+    padding-bottom: 6em;
+    border: 1px solid black;
+    justify-self: center;
+    border-radius: 4px;
+}
