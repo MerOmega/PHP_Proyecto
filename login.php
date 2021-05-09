@@ -4,7 +4,7 @@
 <head>
  <title>Ingreso</title>
 </head>
-
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <?php 
     class Usuario extends Exception{
         private $usuario;
@@ -39,7 +39,7 @@
                 $_SESSION['nombredeusuario']=$this->getter_usuario();
                 header('location:index.php');
             }else{
-                throw new InvalidArgumentException("Usuario y/o Contraseña");
+                throw new Exception("Usuario y/o Contraseña");
             }
         }
 
@@ -47,8 +47,14 @@
             try{
             $this->autorizar($conn);
             }
-            catch(InvalidArgumentException $e){
-                echo $e->message;
+            catch(Exception $e){
+                $error=$e->getMessage();
+                echo "<script>Swal.fire({
+                    title: 'Error!',
+                    text: '".$e->getMessage()."',
+                    icon: 'error',
+                    confirmButtonText: 'Bueno :('
+                  })</script>";
             }
         }
 
