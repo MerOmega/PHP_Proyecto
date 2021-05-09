@@ -1,13 +1,12 @@
 /*Cabecera*/
 
 body{
-    
     margin: 0px;
 }
 header{
     width: 100%;
     height: 100%;
-    background-color: #615f5f;
+    background-color: #5f615f;
     left: 0px;
     border-bottom: 3px solid orange;
 }
@@ -38,7 +37,7 @@ form input{
 
 form button{
     border: none;
-    width: 70px;
+    width: 80px;
     height: 40px;
     border-radius: 3px;
     text-align: center;

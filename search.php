@@ -68,7 +68,7 @@
                         <option value="fechaAs">Caducidad mas cercana</option>
                         <option value="fechaDes">Caducidad mas lejana</option>
                     </select>
-                    <button type="submit" class="boton">Enviar</button>
+                    <button type="submit" class="boton">Seleccionar</button>
           </form>
           <?php 
             require("paginacionSearch.php");

@@ -110,7 +110,7 @@ function procesoFiltroCategory($var1){
                             <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
                             <?php } ?>
                             </select>
-                <button type="submit" class="boton">Enviar</button>
+                <button type="submit" class="boton">Seleccionar</button>
             </form>
 
              <!--Fomulario seleccionador para elegir el metodo de orden de los productos-->
@@ -121,7 +121,7 @@ function procesoFiltroCategory($var1){
                         <option value="fechaAs">Caducidad mas cercana</option>
                         <option value="fechaDes">Caducidad mas lejana</option>
                     </select>
-                    <button type="submit" class="boton">Enviar</button>
+                    <button type="submit" class="boton">Seleccionar</button>
                 </form>
             
      </div>
