@@ -23,7 +23,7 @@
 </header>
  
  <!-- formulario de ingreso de datos para el registro del usuario-->
- <div>
+ <div style="padding-top: 1em;">
  <form id="formulario" style="text-align:center;" name="registro" action="registrar.php" method="POST" novalidate>
 
     <input type="text" name="user" placeholder="Ingrese nombre de usuario"><br><br>
@@ -55,7 +55,7 @@
             $telefono=$_POST['telefono'];
            //se realiza con consulta sql y se guarda en la tabla usuarios de la bd el nuevo usuario 
             $sql= "INSERT INTO usuarios (nombredeusuario, clave, apellido, nombre, email, telefono)
-            VALUES ('$usuario','$nombre','$apellido','$clave','$email','$telefono')";
+            VALUES ('$usuario','$clave','$apellido','$nombre','$email','$telefono')";
             if($conn->query($sql) === true){
                 ?>
                 <script>Swal.fire({
