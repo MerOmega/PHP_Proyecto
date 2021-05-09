@@ -21,11 +21,12 @@
         function getter_usuario(){
             return $this->usuario;
         }
+
         function validar($conn){
             if(isset($this->usuario) && isset($this->contraseña)){
-            $sql= "SELECT * FROM usuarios where binary nombredeusuario= binary '$this->usuario' and binary clave=binary '$this->contraseña'";
-            $result = $conn->query($sql);
-            $num=mysqli_num_rows($result);
+                $sql= "SELECT * FROM usuarios where binary nombredeusuario= binary '$this->usuario' and binary clave=binary '$this->contraseña'";
+                $result = $conn->query($sql);
+                $num=mysqli_num_rows($result);
             return $num;
             }else{
                 return 0;
@@ -33,11 +34,21 @@
         }
 
         function autorizar($conn){
+            $num =$this->validar($conn);
+            if($num==1){
+                $_SESSION['nombredeusuario']=$this->getter_usuario();
+                header('location:index.php');
+            }else{
+                throw new InvalidArgumentException("Usuario y/o Contraseña");
+            }
+        }
+
+        function ingreso($conn){
             try{
-               $this->validar($conn);
-            }catch(Exception $e){
+            $this->autorizar($conn);
+            }
+            catch(InvalidArgumentException $e){
                 echo $e->message;
-                echo "asdsdas";
             }
         }
 
@@ -61,14 +72,7 @@
         if(isset($_POST['username'])&&isset($_POST['password'])){
             $usuario->agregar_usuario($_POST['username']);
             $usuario->agregar_cont($_POST['password']);
-            $num=$usuario->validar($conn);
-        
-        if($num==1){
-            $_SESSION['nombredeusuario']=$usuario->getter_usuario();
-            header('location:index.php');
-        }else{
-            /*header('location:registrar.php');*/
-        }
+            $usuario->ingreso($conn);   
     }
     ?>
 
