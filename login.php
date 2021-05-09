@@ -48,7 +48,6 @@
             $this->autorizar($conn);
             }
             catch(Exception $e){
-                $error=$e->getMessage();
                 echo "<script>Swal.fire({
                     title: 'Error!',
                     text: '".$e->getMessage()."',
