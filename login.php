@@ -17,7 +17,7 @@
     <?php
         session_start();
         if(isset($_POST["username"]) && isset($_POST["password"])){
-        require('coneccion.php');
+        require('BD.php');
         $username=$_POST['username'];
         $password=$_POST['password'];
         $sql= "SELECT * FROM usuarios where binary nombredeusuario= binary '$username' and binary clave=binary '$password'";

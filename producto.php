@@ -46,7 +46,7 @@
 <?php
     if(isset($_GET['id'])){
         $id=$_GET['id'];
-        require('coneccion.php');
+        require('BD.php');
 
         $sql= "SELECT * FROM productos WHERE (idProducto = '$id')";
 

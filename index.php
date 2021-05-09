@@ -80,7 +80,7 @@ function procesoFiltroCategory($var1){
         <div>
         <!-- Consulta a la base-->
             <?php
-                require('coneccion.php'); //enlazo la base
+                require('BD.php'); //enlazo la base
                 ?>
                 <div id="sorted">
                 <?php $sql= "SELECT * FROM categorias_productos";?>

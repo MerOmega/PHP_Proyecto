@@ -36,7 +36,7 @@
         <?php
         if(isset($_POST["submit"])){
         if(!empty($_POST["user"]) && !empty($_POST["nombre"]) && !empty($_POST["apellido"]) && !empty($_POST["clave"]) && !empty($_POST["email"]) && !empty($_POST["telefono"])){
-            require('coneccion.php');
+            require('BD.php');
             $usuario=$_POST['user'];
             $nombre=$_POST['nombre'];
             $apellido= $_POST['apellido'];

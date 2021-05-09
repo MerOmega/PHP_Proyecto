@@ -39,7 +39,7 @@
         </div>
         
         <?php
-        require('coneccion.php');
+        require('BD.php');
             if(isset($_POST['submit-search'])){
                     if($_POST['buscador']!=""){
                         //Filtra characteres 
