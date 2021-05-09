@@ -10,7 +10,7 @@
     if(!isset($_SESSION['sort_user_defined'])){
         $_SESSION['sort_user_defined']='ORDER BY precio DESC';
     }
-
+    
 function procesoFiltroSort(){
     switch($_SESSION['sort_user']){
         case "precioAs":
@@ -52,9 +52,9 @@ function procesoFiltroCategory($var1){
          <h1>CompraBarato!</h1>
         <div class="buscador">
    
-            <form > 
-                <input type="search" id="query" name="b" placeholder="Busca aqui..."> 
-                <button>Search</button>
+            <form action="search.php" method="POST"> 
+                <input type="text" name="buscador" placeholder="Busca aqui..."> 
+                <button type="submit" name="submit-search">Search</button>
             </form>
         </div>
   </div>
@@ -128,10 +128,8 @@ function procesoFiltroCategory($var1){
                     <?php
                             echo '<a href="producto.php?id='.$row["idProducto"].'"><img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" ></a>';
                             ?>
-                            <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>
-                            <div class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
-                            <div style="display: none;" class="disponible"><p><?php echo $row["idUsuarioComprador"] ?></p></div>
-                            <?php echo " - Desc: " ." " . $row["descripcion"] . "-Precio:"." ".$row["precio"];   
+                            <p><?php echo "Articulo: " . $row["nombre"]?></p>
+                            <?php echo "-Precio:"." ".$row["precio"];   
                             ?>
                         </div>
                     <?php

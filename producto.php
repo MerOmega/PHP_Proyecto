@@ -5,6 +5,10 @@
     session_start();
 ?>
 
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital@1&display=swap');
+</style>
+
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
 <head>
     <title>
@@ -18,10 +22,9 @@
 <div class="cabecera">
          <h1>CompraBarato!</h1>
         <div class="buscador">
-   
-            <form > 
-                <input type="search" id="query" name="b" placeholder="Busca aqui..."> 
-                <button>Search</button>
+            <form action="search.php" method="POST"> 
+                <input type="text" name="search" placeholder="Busca aqui..."> 
+                <button type="submit" name="submit-search">Search</button>
             </form>
         </div>
   </div>
@@ -49,15 +52,15 @@
 
         $result = $conn->query($sql);
         if($result->num_rows > 0){
-            while ($row = $result->fetch_assoc()){
-                
+            while ($row = $result->fetch_assoc()){ 
                 $nombre=$row['nombre'];
                 $precio=$row["precio"];
+                $descripcion=$row['descripcion'];
                 $publicacion=$row["publicacion"];
                 $caducidad=$row["caducidad"];
                 $imagen=$row["contenidoimagen"];
-                
-               
+                $idCategoria=$row['idCategoriaProducto'];
+                $idVendedor=$row['idUsuarioVendedor'];
             }
             
         }else{
@@ -68,14 +71,45 @@
         echo "No encontre el ID";
     }
 ?>
-<div class="contenedor_imagen">
-<?php
 
-    echo '<div class="imagen_prod"><p>'.$nombre.'</p>';
-    echo '<img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="100px; height=150" ></div>';
-    
-?>
+    <?php 
+            $sql="SELECT * FROM categorias_productos WHERE (idCategoriaProducto='$idCategoria')";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0){
+                while ($row = $result->fetch_assoc()){
+                    $nombreCat=$row['nombre'];               
+                }
+            }
+            
+            $sql="SELECT * FROM usuarios WHERE (idUsuario='$idVendedor')";
+            $result = $conn->query($sql);
+            if($result->num_rows > 0){
+                while ($row = $result->fetch_assoc()){
+                    $usVendedor=$row['nombredeusuario'];               
+                }
+            }
+    ?>
+
+<div class="contenedor_imagen">
+    <div class="contenedor_muestra">
+        <?php
+            echo '<div class="texto_prod"><p>'.$nombre.'</p>';
+            echo '<img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="200px; height=300" ></div>';
+            echo "<p>Fecha la publicacion: ".$publicacion."</p>";
+            echo "<p>Fecha de caducidad de la publicacion: ".$caducidad."</p>" ?>
+        
+        </div>
+
+        <div class="contenedor_precio">
+            <p class="precio"> <?php echo "Precio: $".$precio ?> </p>
+            <div>
+             <br><br><br>
+             <p><?php echo "Categoria: ".$nombreCat;?></p>   
+             <p><?php echo "Vendedor: ".$usVendedor?></p>
+            </div>
+        </div>
 </div>
+<p class="descripcion"><?php echo "Descripcion del producto: <br><br>".$descripcion ?></p>
 
     <script type="text/javascript">  
         var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 

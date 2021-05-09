@@ -1,7 +1,7 @@
 /*Cabecera*/
 
 body{
-    background-color: rgba(0, 0, 0, 0.082);
+    
     margin: 0px;
 }
 header{
@@ -203,14 +203,54 @@ a:visited {
 .contenedor_imagen{
     display: grid;
     text-align: center;
-    padding-top: 5em;
-    
+    grid-template-columns: repeat(2,1fr);
+    padding: 1em;
+    grid-gap: 0px;
 }
 
-.imagen_prod{
-    padding:3em;
-    padding-bottom: 6em;
-    border: 1px solid black;
-    justify-self: center;
+.contenedor_imagen p{
+    font:700 28px 'Montserrat',sans-serif; 
+    font-weight: bold; 
+}
+
+.texto_prod{
+    padding:1em;
     border-radius: 4px;
+}
+.texto_prod p{
+    display:inline-block;
+    max-width: 20em;
+    text-align: left;
+    word-break: break-word;
+    margin-bottom: 20px;
+ }
+.contenedor_imagen p.precio{
+    font-size: 30px; 
+    padding-top:0.5em;
+}
+
+.descripcion{
+    font:700 28px "Montserrat",sans-serif; 
+    text-align: justify;
+    padding-right: 10em;
+    padding-left: 10em;
+}
+
+.contenedor_imagen .contenedor_muestra{
+    display: inline-block;
+    text-align: right;
+}
+
+.contenedor_imagen .contenedor_precio{
+    display: inline-block;
+    
+    text-align: left;
+    padding-left: 5em;
+}
+
+div#barrahormiga {
+    border: 1px solid #ccc;
+    margin: 20px auto;
+    background: 0 0;
+    border-radius: 10px;
 }
