@@ -79,7 +79,8 @@
                     <?php
                             echo '<a href="producto.php?id='.$row["idProducto"].'"><img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" ></a>';
                             ?>
-                            <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>                         
+                            <p><?php echo "Articulo: " . $row["nombre"] . " ID: ". $row['idProducto']?></p>      
+                            <div class="caduca"><p><?php echo $row["caducidad"] ?></p></div>                   
                             <?php echo "-Precio:"." ".$row["precio"];   
                             ?>
                         </div>

@@ -28,11 +28,14 @@ function procesoFiltroSort(){
     }
 }
 function procesoFiltroCategory($var1){
+    $date=date('Y-m-d');
     if($_SESSION['category_user']=="show_all"){
-        $_SESSION['category_user']='';
+       
+        $_SESSION['category_user']="WHERE (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
     }
     else{
-        $_SESSION['category_user'] = "WHERE (C.nombre ='$var1') AND (P.idUsuarioComprador<=>NULL)";
+
+        $_SESSION['category_user'] = "WHERE (C.nombre ='$var1') AND (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
     }
 }
 
@@ -129,6 +132,7 @@ function procesoFiltroCategory($var1){
                             echo '<a href="producto.php?id='.$row["idProducto"].'"><img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="100px; height=150" ></a>';
                             ?>
                             <p><?php echo "Articulo: " . $row["nombre"]?></p>
+                            <div class="caduca"><p><?php echo $row["caducidad"] ?></p></div>
                             <?php echo "-Precio:"." ".$row["precio"];   
                             ?>
                         </div>

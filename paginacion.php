@@ -15,7 +15,8 @@
                         (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string";  
                 }else{
                 $string=$_SESSION['sort_user_defined'];
-                $sql= "SELECT COUNT(*) FROM productos WHERE (idUsuarioComprador<=>NULL) $string";       
+                $date=date('Y-m-d');
+                $sql= "SELECT COUNT(*) FROM productos WHERE (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";       
                 }
                 
 
@@ -57,7 +58,8 @@
                         (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string $limit";           
                 }else{
                     $string= $_SESSION['sort_user_defined'];
-                    $sql= "SELECT * FROM productos WHERE (idUsuarioComprador<=>NULL) $string $limit";
+                    $date=date('Y-m-d');
+                    $sql= "SELECT * FROM productos WHERE (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
                 }
                 
                 $result = $conn->query($sql);

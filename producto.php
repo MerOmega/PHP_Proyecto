@@ -47,9 +47,7 @@
     if(isset($_GET['id'])){
         $id=$_GET['id'];
         require('BD.php');
-
         $sql= "SELECT * FROM productos WHERE (idProducto = '$id')";
-
         $result = $conn->query($sql);
         if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()){ 
@@ -93,7 +91,7 @@
 <div class="contenedor_imagen">
     <div class="contenedor_muestra">
         <?php
-            echo '<div class="texto_prod"><p>'.$nombre.'</p>';
+            echo '<div class="texto_prod"><p>'.$nombre.'</p><br>';
             echo '<img src="data:image;base64,'.base64_encode($imagen).'" alt="Image" style="width="200px; height=300" ></div>';
             echo "<p>Fecha la publicacion: ".$publicacion."</p>";
             echo "<p>Fecha de caducidad de la publicacion: ".$caducidad."</p>" ?>

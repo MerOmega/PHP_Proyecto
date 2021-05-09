@@ -28,10 +28,8 @@
                 
                 $string=$_SESSION['sort_user_defined'];
                 $search = $conn->real_escape_string($_SESSION['buscador']);
-                $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' OR descripcion LIKE '%$search%' AND (idUsuarioComprador<=>NULL) $string";       
-                
-                
-
+                $date=date('Y-m-d');
+                $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";       
                 //obtengo la cantidad total de elementos 
                 $result = $conn->query($sql);
                 $row = mysqli_fetch_row($result);
@@ -66,8 +64,8 @@
                 
                 $string= $_SESSION['sort_user_defined'];
                 $search = $conn->real_escape_string($_SESSION['buscador']);
-                $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' OR descripcion LIKE '%$search%' AND (idUsuarioComprador<=>NULL) $string $limit";
-
+                echo "$date";
+                $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
                 $result = $conn->query($sql);
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
                 $paginCtrls='';
