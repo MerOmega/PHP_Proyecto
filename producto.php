@@ -20,7 +20,7 @@
 <body>
 <header>
 <div class="cabecera">
-         <h1>CompraBarato!</h1>
+        <h1><a href="index.php">CompraBarato!</a></h1>
         <div class="buscador">
             <form action="search.php" method="POST"> 
                 <input type="text" name="search" placeholder="Busca aqui..."> 

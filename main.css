@@ -20,6 +20,10 @@ header{
     padding-left: 45%;
     color: white;
 }
+.cabecera h1 a{
+    text-decoration: none;
+    color: white;
+}
 
 .buscador{
     padding: 12px 15px;
@@ -90,7 +94,31 @@ button:hover{
     transition: 0.3s;
 }
 
+.desplegable{
+    position: relative;
+    display: inline-block;
+}
 
+.desplegable_cont{
+    display: none;
+    background-color: white;
+    position: absolute;
+    min-width: 120px;
+    box-shadow: 0px 4px 4px rgba(0,0,0,0.2);
+    
+}
+
+.desplegable_cont a{
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
+}
+
+.desplegable:hover .desplegable_cont{
+    display: block;
+}
 
 /*Fin de todo cabecera*/
 
