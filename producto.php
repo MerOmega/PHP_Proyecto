@@ -113,15 +113,9 @@
 </div>
 <p class="descripcion"><?php echo "Descripcion del producto: <br><br>".$descripcion ?></p>
 
-    <script type="text/javascript">  
-        var sesionactual='<?php echo $_SESSION['nombredeusuario'] ?>'; 
-        function cambioUsuario(){
-            if(sesionactual!="Invitado"){
-                $("#usuarios").replaceWith( '<div id="usuarios"> <a href="#">Hola <?php echo $_SESSION['nombredeusuario']; ?></a> <a href="logout.php">Log Out</a> </div>');
-            }
-        }
-        cambioUsuario(sesionactual);
-    </script>
+    <?php
+    require("userbanner.php")
+    ?>
 </main>
 </body>
 
