@@ -281,3 +281,89 @@ div#barrahormiga {
     background: 0 0;
     border-radius: 10px;
 }
+
+
+/*-----------------info usuario-----------------*/
+.wrapperInfo{
+    align-self: center;
+    padding: 2em;
+    padding-right: 40%;
+    padding-left: 45%;
+    
+}
+.contenedorInfo{
+    border: black 1px solid;
+    border-radius: 5px;
+    box-shadow:0px 4px 4px rgba(0,0,0,0.2);
+    display: grid;
+    grid-template-columns: 1fr;
+    width: min-content;
+}
+
+.row:hover{
+    cursor: pointer;
+    background-color: rgba(117, 117, 117, 0.616);
+}
+
+.pop{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%) scale(0);
+    transition: 0.3s ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    background-color: white;
+    z-index: 10;
+    width: 400px;
+    max-width: 80%;
+    cursor: text;
+    
+}
+
+
+.pop.active{
+    transform: translate(-50%,-50%) scale(1);
+}
+
+.pophead{
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+}
+
+.pophead .titulo{
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.pophead .close{
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.25rem;
+    font-weight: bold;
+}
+
+.popbody{
+    padding: 10px 15px;
+    }
+
+#overlay{
+    position: fixed;
+    opacity:0;
+    top:0;
+    left:0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0,0,0,.5);
+    pointer-events: none;
+}
+
+#overlay.active{
+    opacity: 1;
+    pointer-events: all;
+}
