@@ -305,6 +305,11 @@ div#barrahormiga {
     background-color: rgba(117, 117, 117, 0.616);
 }
 
+.row p{
+    margin: 0;
+    padding: 1rem;
+}
+
 .pop{
     position: fixed;
     top: 50%;

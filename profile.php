@@ -57,13 +57,14 @@
                     <div class="wrapperInfo">
                         <div class="contenedorInfo">
                         <?php
+                        $id=$row["idUsuario"];
                         $apellido=$row['apellido'];     
                         $nombre=$row['nombre'];
                         $telefono=$row['telefono'];
                         $email=$row['email'];
-                            ?>
-                            <div data-modal-target="#pop" class='row'>
-                                <?php echo("<p>$nombre</p>");?>
+                        ?>
+                            <div class='row'>
+                                <?php echo("<p data-modal-target="."#pop>$nombre</p>");?>
                                 <div class="pop" id="pop">
                                     <div class="pophead">
                                         <div class="titulo"> Ejemplo</div>
@@ -78,8 +79,8 @@
                                 </div>
                             </div>
                             <div id="overlay"></div>
-                            <div data-modal-target="#popApe" class='row'>
-                                <?php echo("<p>$apellido</p>");?>
+                            <div class='row'>
+                                <?php echo("<p  data-modal-target="."#popApe".">$apellido</p>");?>
                                     <div class="pop" id="popApe">
                                         <div class="pophead">
                                             <div class="titulo"> Cambio de Apellido</div>
@@ -93,8 +94,8 @@
                                         </div>   
                                     </div>
                              </div>
-                             <div data-modal-target="#popContra" class='row'>
-                             <?php echo("<p>Contraseña</p>");?>
+                             <div class='row'>
+                             <?php echo("<p data-modal-target="."#popContra>Contraseña</p>");?>
                                     <div class="pop" id="popContra">
                                         <div class="pophead">
                                             <div class="titulo"> Cambio de Contraseña</div>
@@ -108,8 +109,8 @@
                                         </div>   
                                     </div>
                              </div>
-                             <div data-modal-target="#popMail" class='row'>
-                             <?php echo("<p>$email</p>");?>
+                             <div class='row'>
+                             <?php echo("<p data-modal-target="."#popMail>$email</p>");?>
                                     <div class="pop" id="popMail">
                                         <div class="pophead">
                                             <div class="titulo"> Cambio de Email</div>
@@ -123,8 +124,8 @@
                                         </div>   
                                     </div>
                              </div>
-                             <div data-modal-target="#popTel" class='row'>
-                             <?php echo("<p>Telefono</p>");?>
+                             <div class='row'>
+                             <?php echo("<p data-modal-target="."#popTel>Telefono</p>");?>
                                     <div class="pop" id="popTel">
                                         <div class="pophead">
                                             <div class="titulo"> Cambio de Telefono</div>
@@ -138,8 +139,8 @@
                                         </div>   
                                     </div>
                              </div>
-                             <div data-modal-target="#popUser" class='row'>
-                             <?php echo("<p>Usuario:"."$usuario</p>");?>
+                             <div class='row'>
+                             <?php echo("<p data-modal-target="."#popUser>Usuario:"."$usuario</p>");?>
                                     <div class="pop" id="popUser">
                                         <div class="pophead">
                                             <div class="titulo"> Cambio de Usuario</div>
@@ -166,13 +167,24 @@
  require("userbanner.php");
        if(isset($_POST["submit"])){
             if(isset($_POST["nombre"]) && !empty($_POST["nombre"])){
-                echo($_POST["nombre"]);
+                $nombre=$_POST["nombre"];
+                $sql="UPDATE usuarios SET nombre='$nombre' WHERE idUsuario='$id'";
+                mysqli_query($conn,$sql);
+                //Necesita refresh
+                ?>
+                
+                <?php
+            }else if(isset($_POST["apellido"]) && !empty($_POST["apellido"]) ) {
+                echo($_POST["apellido"]);
             }
         }
-
-
-
 ?>
+
+<script>
+function reloadThePage(){
+    window.location.reload();
+} 
+</script>
 </main>
 </body>
 
