@@ -5,6 +5,7 @@ var pass = document.querySelector('input[name=clave]');
 var mail = document.querySelector('input[name=email]');
 var tele = document.querySelector('input[name=telefono]');
 
+
 function validAlfa(variable){
     var letters = /^[A-Za-z ]+$/; /*Acepta Mayusculas y espacio*/
     var esValido=true;

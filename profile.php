@@ -46,6 +46,7 @@
     require("BD.php");
     ?>
     <h2>Panel de usuario</h2>
+    <span>Seleccione el cambio a realizar</span>
     <?php
         if(isset ($_SESSION["nombredeusuario"])){
             $usuario=$_SESSION["nombredeusuario"];
@@ -67,7 +68,7 @@
                                 <?php echo("<p data-modal-target="."#pop>$nombre</p>");?>
                                 <div class="pop" id="pop">
                                     <div class="pophead">
-                                        <div class="titulo"> Ejemplo</div>
+                                        <div class="titulo"> Cambio de Nombre </div>
                                         <button data-close-button class="close">&times;</button>
                                     </div>
                                     <div class="popbody">
@@ -103,7 +104,7 @@
                                         </div>
                                         <div class="popbody">
                                             <form id="cambio"  style="text-align:center;" name="profile" action="profile.php" method="POST" novalidate>
-                                            <input type="text" name="contra" placeholder="Ingrese Contraseña"><br><br>
+                                            <input type="text" name="clave" placeholder="Ingrese Contraseña"><br><br>
                                             <button type="submit" name="submit" class="boton">Cambiar</button>
                                             </form>
                                         </div>   
@@ -148,7 +149,7 @@
                                         </div>
                                         <div class="popbody">
                                             <form id="cambio"  style="text-align:center;" name="profile" action="profile.php" method="POST" novalidate>
-                                            <input type="text" name="usuario" placeholder="Ingrese usuario"><br><br>
+                                            <input type="text" name="user" placeholder="Ingrese usuario"><br><br>
                                             <button type="submit" name="submit" class="boton">Cambiar</button>
                                             </form>
                                         </div>   
@@ -169,23 +170,34 @@
             if(isset($_POST["nombre"]) && !empty($_POST["nombre"])){
                 $nombre=$_POST["nombre"];
                 $sql="UPDATE usuarios SET nombre='$nombre' WHERE idUsuario='$id'";
-                mysqli_query($conn,$sql);
                 //Necesita refresh
-                ?>
-                
-                <?php
             }else if(isset($_POST["apellido"]) && !empty($_POST["apellido"]) ) {
-                echo($_POST["apellido"]);
+                $apellido=$_POST["apellido"];
+                $sql="UPDATE usuarios SET apellido='$apellido' WHERE idUsuario='$id'";
+            }else if(isset($_POST["clave"]) && !empty($_POST["clave"])){
+                $contra=$_POST["clave"];
+                $sql="UPDATE usuarios SET clave='$contra' WHERE idUsuario='$id'";
+            }else if(isset($_POST["email"]) && !empty($_POST["email"])){
+                $email=$_POST["email"];
+                $sql="UPDATE usuarios SET email='$email' WHERE idUsuario='$id'";
+            }else if(isset($_POST["telefono"]) && !empty($_POST["telefono"])){
+                $telefono=$_POST["telefono"];
+                $sql="UPDATE usuarios SET telefono='$telefono' WHERE idUsuario='$id'";
+            }else if(isset($_POST["user"]) && !empty($_POST["user"])){
+                $usuario=$_POST["user"];
+                $sql="UPDATE usuarios SET nombredeusuario='$usuario' WHERE idUsuario='$id'"; 
+                $_SESSION['nombredeusuario']=$usuario;           
             }
+            mysqli_query($conn,$sql);
+            ?>
+            <script>
+                window.location.href = window.location.href
+                </script>
+            <?php
         }
 ?>
 
-<script>
-function reloadThePage(){
-    window.location.reload();
-} 
-</script>
 </main>
 </body>
-
+<script type="text/javascript" src="validar.js"></script>
 </html>
