@@ -47,7 +47,7 @@
     require("BD.php");
     ?>
     <h2>Agregue su producto!</h2>
-    <form id="addprod" style="text-align:center;" name="registro" action="agregarArt.php" method="POST" novalidate>
+    <form id="addprod" style="text-align:center;" name="registro" action="agregarArt.php" method="POST"  enctype="multipart/form-data" novalidate>
         <label>Titulo de su publicacion</label><br>
         
         <input type="text" name="titulo" placeholder="Ingrese titulo del producto"><br><br>
@@ -73,17 +73,28 @@
         </div> <br>
         <label>Descripcion del producto</label><br>
         <textarea type="text" rows="5" cols="60" name="descripcion" placeholder="Ingrese la descripcion" ></textarea><br><br>
-        <input type="file" name="file"><br><br>
+        <input type="file"  name="uploadfile"><br><br>
         <button type="submit" name="upload">Agregar!</button>
-
     </form>
     
 <?php 
  require("userbanner.php");
+ if (isset($_POST['upload'])) {
+ 
+    $filename = $_FILES["uploadfile"]["name"];
+    $tempname = $_FILES["uploadfile"]["tmp_name"];   
+        $folder = "image/".$filename;
+    $sql="INSERT INTO productos (idProducto, idCategoriaProducto, idUsuarioVendedor, idUsuarioComprador, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen) VALUES ('24', '2', '1', NULL, 'Cosaseg', 'asdasdsa', '1233', '2021-06-12', '2021-06-19','$filename','jpg'";
+    mysqli_query($conn,$sql) or die('Error: '.mysqli_error($conn));;
+    if (move_uploaded_file($tempname, $folder))  {
+        $msg = "Image uploaded successfully";
+    }else{
+        $msg = "Failed to upload image";
+  }
+}
 ?>
    
 
 </main>
 </body>
-<script type="text/javascript" src="validar.js"></script>
 </html>
