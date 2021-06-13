@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 <script src="https://code.jquery.com/jquery-3.5.0.js"></script>
@@ -80,13 +79,17 @@
 <?php 
  require("userbanner.php");
  if (isset($_POST['upload'])) {
- 
+     $nombre=$_POST["titulo"];
+     $desc=$_POST["descripcion"];
     $filename = $_FILES["uploadfile"]["name"];
-    $tempname = $_FILES["uploadfile"]["tmp_name"];   
-        $folder = "image/".$filename;
-    $sql="INSERT INTO productos (idProducto, idCategoriaProducto, idUsuarioVendedor, idUsuarioComprador, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen) VALUES ('24', '2', '1', NULL, 'Cosaseg', 'asdasdsa', '1233', '2021-06-12', '2021-06-19','$filename','jpg'";
-    mysqli_query($conn,$sql) or die('Error: '.mysqli_error($conn));;
-    if (move_uploaded_file($tempname, $folder))  {
+    $tmp_name = $_FILES["uploadfile"]["tmp_name"];  
+    $size=$_FILES["uploadfile"]["size"];
+    $folder = "image/".$filename;
+    $blob=addslashes(file_get_contents($tmp_name));
+    $sql="INSERT INTO productos (idCategoriaProducto, idUsuarioVendedor, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen)
+    VALUES ('1','1','$nombre','$desc','1200','2021-06-13','2021-06-19','$blob','jpg')";
+    mysqli_query($conn,$sql);
+    if (move_uploaded_file($tmp_name, $folder))  {
         $msg = "Image uploaded successfully";
     }else{
         $msg = "Failed to upload image";
