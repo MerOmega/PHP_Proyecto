@@ -66,12 +66,17 @@
         <div id="contenedor_categorias">
                             <select name="categorias">
                             <?php while($datos=mysqli_fetch_array( $result )){ ?>
-                            <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
+                            <option value="<?php echo $datos['idCategoriaProducto'] ?>"><?php echo $datos['nombre']?></option>
                             <?php } ?>
                             </select>
         </div> <br>
         <label>Descripcion del producto</label><br>
-        <textarea type="text" rows="5" cols="60" name="descripcion" placeholder="Ingrese la descripcion" ></textarea><br><br>
+        <textarea type="text" rows="5" cols="60" name="descripcion" placeholder="Ingrese la descripcion" ></textarea><br>
+        <label>Precio $:</label>
+        <input type="text" name="precio" style="margin-left: 10px;">
+        <br><br>
+        <input type="date" id="date" name="caducidad" min="<?php date('Y-m-d')?>" max="2099-12-31">
+        <br><br>
         <input type="file"  name="uploadfile"><br><br>
         <button type="submit" name="upload">Agregar!</button>
     </form>
@@ -79,24 +84,75 @@
 <?php 
  require("userbanner.php");
  if (isset($_POST['upload'])) {
-     $nombre=$_POST["titulo"];
-     $desc=$_POST["descripcion"];
-    $filename = $_FILES["uploadfile"]["name"];
-    $tmp_name = $_FILES["uploadfile"]["tmp_name"];  
-    $size=$_FILES["uploadfile"]["size"];
-    $folder = "image/".$filename;
-    $blob=addslashes(file_get_contents($tmp_name));
-    $sql="INSERT INTO productos (idCategoriaProducto, idUsuarioVendedor, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen)
-    VALUES ('1','1','$nombre','$desc','1200','2021-06-13','2021-06-19','$blob','jpg')";
-    mysqli_query($conn,$sql);
-    if (move_uploaded_file($tmp_name, $folder))  {
-        $msg = "Image uploaded successfully";
-    }else{
-        $msg = "Failed to upload image";
-  }
+        if( cumple() ){
+        $nombre=$_POST["titulo"];
+        $desc=$_POST["descripcion"];
+        $idcat=$_POST["categorias"];
+        $precio=$_POST["precio"];
+        $caducidad=$_POST["caducidad"];
+        //fecha actual
+        $date=date('Y-m-d');
+        $id=obtenerid($_SESSION['nombredeusuario'],$conn);
+        $filename = $_FILES["uploadfile"]["name"];
+        $tmp_name = $_FILES["uploadfile"]["tmp_name"]; 
+        $allowTypes = array('jpg','png','jpeg'); 
+        //obtengo la extension del archivo
+        $extension= pathinfo($filename,PATHINFO_EXTENSION);
+        if(in_array($extension, $allowTypes)){
+            $folder = "image/".$filename;
+            $blob=addslashes(file_get_contents($tmp_name));
+            $sql="INSERT INTO productos (idCategoriaProducto, idUsuarioVendedor, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen)
+            VALUES ('$idcat','$id','$nombre','$desc','$precio','$date','$caducidad','$blob','$extension')";
+            mysqli_query($conn,$sql);
+        }else{
+            echo("Formato de archivo no valido");
+        }
+    
+    }
+    else{
+        echo("No puede haber campos en blanco");
+    }
 }
 ?>
    
+<?php 
+ function obtenerid($nombre,$conn){
+    $sql="SELECT * FROM usuarios WHERE nombredeusuario='$nombre'";
+    $result = $conn->query($sql);
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $id=$row["idUsuario"];
+        }
+
+    }
+    return $id;
+    }
+
+    function cumple(){
+        $existe=true;
+        if((!empty($_POST["titulo"]) && !empty($_POST["descripcion"]) && !empty($_POST["categorias"]) && !empty($_POST["precio"]) && !empty($_POST["caducidad"]) && !empty($_POST["uploadfile"])  ) ){
+            $existe=false;
+        }
+        return $existe;
+    }
+
+?>
+<!-- Bloquea los dias anteriores al actual donde selecciono la fecha -->
+<script>
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    $('#date').attr('min', maxDate);
+});</script>
 
 </main>
 </body>
