@@ -75,8 +75,10 @@
         <label>Precio $:</label>
         <input type="text" name="precio" style="margin-left: 10px;">
         <br><br>
+        <label>Fecha:</label>
         <input type="date" id="date" name="caducidad" min="<?php date('Y-m-d')?>" max="2099-12-31">
         <br><br>
+        <label>Max:350KB</label>
         <input type="file"  name="uploadfile"><br><br>
         <button type="submit" name="upload">Agregar!</button>
     </form>
@@ -90,6 +92,7 @@
         $idcat=$_POST["categorias"];
         $precio=$_POST["precio"];
         $caducidad=$_POST["caducidad"];
+        $maxsize = 350000;
         //fecha actual
         $date=date('Y-m-d');
         $id=obtenerid($_SESSION['nombredeusuario'],$conn);
@@ -98,14 +101,13 @@
         $allowTypes = array('jpg','png','jpeg'); 
         //obtengo la extension del archivo
         $extension= pathinfo($filename,PATHINFO_EXTENSION);
-        if(in_array($extension, $allowTypes)){
-            $folder = "image/".$filename;
+        if(in_array($extension, $allowTypes) && $_FILES["uploadfile"]["size"]<=$maxsize){
             $blob=addslashes(file_get_contents($tmp_name));
             $sql="INSERT INTO productos (idCategoriaProducto, idUsuarioVendedor, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen)
             VALUES ('$idcat','$id','$nombre','$desc','$precio','$date','$caducidad','$blob','$extension')";
             mysqli_query($conn,$sql);
         }else{
-            echo("Formato de archivo no valido");
+            echo("Formato de archivo no valido o tamaño de archivo excede el limite");
         }
     
     }
