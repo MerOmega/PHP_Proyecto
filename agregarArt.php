@@ -78,7 +78,7 @@
         <label>Fecha:</label>
         <input type="date" id="date" name="caducidad" min="<?php date('Y-m-d')?>" max="2099-12-31">
         <br><br>
-        <label>Max:350KB</label>
+        <label>Max:400KB</label>
         <input type="file"  name="uploadfile"><br><br>
         <button type="submit" name="upload">Agregar!</button>
     </form>
@@ -92,7 +92,7 @@
         $idcat=$_POST["categorias"];
         $precio=$_POST["precio"];
         $caducidad=$_POST["caducidad"];
-        $maxsize = 350000;
+        $maxsize = 400000;//400KB
         //fecha actual
         $date=date('Y-m-d');
         $id=obtenerid($_SESSION['nombredeusuario'],$conn);
@@ -106,6 +106,7 @@
             $sql="INSERT INTO productos (idCategoriaProducto, idUsuarioVendedor, nombre, descripcion, precio, publicacion,caducidad,contenidoimagen,tipoImagen)
             VALUES ('$idcat','$id','$nombre','$desc','$precio','$date','$caducidad','$blob','$extension')";
             mysqli_query($conn,$sql);
+            echo("Exito agregando el producto $nombre !!");
         }else{
             echo("Formato de archivo no valido o tamaño de archivo excede el limite");
         }

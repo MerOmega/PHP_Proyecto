@@ -1,0 +1,32 @@
+#cont_tabla{
+    padding-top: 2rem;
+    padding-left: 30%;
+    padding-right: 33%;
+    padding-bottom: 1rem;    
+}
+.tabla {
+    border: 1px black solid;
+    text-align: center;
+    border-collapse: collapse;
+    
+}
+#cont_tabla .tabla th{
+    padding-left: 1rem;
+    padding-right: 1rem;
+    border: 1px black solid;
+}
+
+.tabla_producto td{
+    border: 1px black solid;
+}
+
+.scroll div{
+    height: 60px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    margin: 0;
+}
+
+.scroll div.desc{
+    width: 13rem;
+}
