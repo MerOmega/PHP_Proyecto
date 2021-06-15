@@ -18,6 +18,9 @@
 
 .tabla_producto td{
     border: 1px black solid;
+}
+
+.tabla_producto p{
     cursor: pointer;
 }
 

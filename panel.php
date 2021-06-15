@@ -66,7 +66,10 @@
                 while($row = $result->fetch_assoc()) {
         ?>
             <tr class="tabla_producto">
-                <td data-modal-target=#nom<?php echo $nombre ?> ><div class="scroll"><?php echo ($row["nombre"])?> </div>
+                <td >
+                <div class="scroll"  data-modal-target=#nom<?php echo $nombre ?>>
+                <p><?php echo ($row["nombre"])?></p>
+                </div>
                     <div class="pop" id="nom<?php echo($nombre)?>">
                         <?php $nombre++ ?>
                         <div class="pophead">
@@ -84,7 +87,10 @@
                 </div>
                 </td>
 
-                <td data-modal-target=#desc<?php echo $desc ?> > <div class="scroll desc"><?php echo $row["descripcion"]?></div>
+                <td> 
+                <div class="scroll desc" data-modal-target=#desc<?php echo $desc ?>>  
+                    <p > <?php echo $row["descripcion"]?></p>
+                </div>
                 <div class="pop" id="desc<?php echo($desc)?>">
                         <?php $desc++ ?>
                         <div class="pophead">
@@ -102,7 +108,10 @@
                 </td>
 
                 
-                <td data-modal-target=#precio<?php echo $precio ?>><?php echo $row["precio"]?></div>
+                <td>
+                <div data-modal-target=#precio<?php echo $precio ?>>
+                    <p><?php echo $row["precio"]?></p>
+                </div>
                 <div class="pop" id="precio<?php echo($precio)?>">
                         <?php $precio++ ?>
                         <div class="pophead">
@@ -120,7 +129,10 @@
                 </td>
 
 
-                <td data-modal-target=#cat<?php echo $cat ?>> <?php echo ($row["idCategoriaProducto"])?>
+                <td> 
+                <div data-modal-target=#cat<?php echo $cat ?>>
+                 <p><?php echo ($row["idCategoriaProducto"])?><p>
+                </div>
                     <div class="pop" id="cat<?php echo($cat)?>">
                         <?php $cat++ ?>
                         <div class="pophead">
@@ -154,7 +166,10 @@
                 </td>
 
 
-                <td  data-modal-target=#cadu<?php echo $cadu ?>><?php echo $row["caducidad"] ?>
+                <td>
+                <div data-modal-target=#cadu<?php echo $cadu?>>
+                    <p><?php echo $row["caducidad"] ?> </p>
+                </div>
                     <div class="pop" id="cadu<?php echo($cadu)?>">
                             <?php $cadu++ ?>
                             <div class="pophead">
@@ -172,7 +187,11 @@
                 </td>
 
 
-                <td data-modal-target=#img<?php echo $img ?>><?php echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="20px; height=30" >';?>
+                <td >
+                <div data-modal-target=#img<?php echo $img ?>>
+                 <p><?php echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="20px; height=30" >';?> </p>
+                </div>
+                <div>
                     <div class="pop" id="img<?php echo($img)?>">
                             <?php $img++ ?>
                             <div class="pophead">
@@ -187,7 +206,6 @@
                             </div>
                         </div>
                     </div>
-            
                 </td>
 
 
