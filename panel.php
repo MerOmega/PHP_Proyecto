@@ -4,6 +4,7 @@
 
 <?php
     session_start(); 
+    $nombre=$desc=$precio=$cat=$cadu=$img=0;
 ?>
 <head>
     <title>
@@ -65,22 +66,143 @@
                 while($row = $result->fetch_assoc()) {
         ?>
             <tr class="tabla_producto">
-                <td class="scroll"><div><?php echo $row["nombre"] ?></div></td>
-                <td class="scroll"><div class="desc"><?php echo $row["descripcion"]?></div></td>
-                <td><?php echo $row["precio"] ?></td>
-                <td><?php echo $row["idCategoriaProducto"] ?></td>
-                <td><?php echo $row["caducidad"] ?></td>
-                <td><?php echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="20px; height=30" >';?></td>
-                <td><?php if($row["idUsuarioComprador"]==NULL){ echo('<button type='."submit"."class="."boton".">&times;</button>");}
-                else {echo("Articulo Comprado");}?></td>
+                <td data-modal-target=#nom<?php echo $nombre ?> ><div class="scroll"><?php echo ($row["nombre"])?> </div>
+                    <div class="pop" id="nom<?php echo($nombre)?>">
+                        <?php $nombre++ ?>
+                        <div class="pophead">
+                                    <div class="titulo"> Cambio de Nombre</div>
+                                    <button data-close-button class="close">&times;</button>
+                        </div>
+                        <div class="popbody">
+                        <form name="formulario" action="panel.php" method="POST" >
+                            <textarea type="text" rows="5" cols="45" name="nombre" placeholder="Ingrese nombre" ><?php echo $row["nombre"] ?></textarea><br>
+                            
+                            <button value="<?php echo($row["idProducto"]) ?>" type="submit" name="submit" class="boton">Cambiar</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </td>
+
+                <td data-modal-target=#desc<?php echo $desc ?> > <div class="scroll desc"><?php echo $row["descripcion"]?></div>
+                <div class="pop" id="desc<?php echo($desc)?>">
+                        <?php $desc++ ?>
+                        <div class="pophead">
+                                    <div class="titulo"> Cambio de Descripcion</div>
+                                    <button data-close-button class="close">&times;</button>
+                        </div>
+                        <div class="popbody">
+                        <form name="formulario" action="panel.php" method="POST" >
+                            <textarea type="text" rows="5" cols="45" name="descripcion" placeholder="Ingrese la descripcion" ><?php echo $row["descripcion"] ?></textarea>
+                            <button type="submit"  value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </td>
+
+
+                <td data-modal-target=#precio<?php echo $precio ?>><?php echo $row["precio"]?></div>
+                <div class="pop" id="precio<?php echo($precio)?>">
+                        <?php $precio++ ?>
+                        <div class="pophead">
+                                    <div class="titulo"> Cambio de precio</div>
+                                    <button data-close-button class="close">&times;</button>
+                        </div>
+                        <div class="popbody">
+                        <form name="formulario" action="panel.php" method="POST" >
+                        <input type="text" name="precio" placeholder="Precio"><br><br>
+                            <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </td>
+
+
+                <td data-modal-target=#cat<?php echo $cat ?>> <?php echo ($row["idCategoriaProducto"])?>
+                    <div class="pop" id="cat<?php echo($cat)?>">
+                        <?php $cat++ ?>
+                        <div class="pophead">
+                                    <div class="titulo"> Cambio de Categoria</div>
+                                    <button data-close-button class="close">&times;</button>
+                        </div>
+                        <div class="popbody">
+                        <form name="formulario" action="panel.php" method="POST" >
+                        <div id="sorted">
+                                <?php 
+                                //consulta sql para obtener todas las categorias de productos
+                                $sql2= "SELECT * FROM categorias_productos";?>
+                                </div>
+                                <?php
+                                //busqueda en la bd de la consulta sql
+                                $result2 = $conn->query($sql2);
+                                ?>
+                            </div> 
+                            <div id="contenedor_categorias">
+                                <select name="categorias">
+                                <?php while($datos=mysqli_fetch_array( $result2 )){ ?>
+                                <option value="<?php echo $datos['idCategoriaProducto'] ?>"><?php echo $datos['nombre']?></option>
+                                <?php } ?>
+                                </select>
+                                </div> <br>
+                            <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                        </form>
+                        </div>
+                    </div>
+                </div>
+                </td>
+
+
+                <td  data-modal-target=#cadu<?php echo $cadu ?>><?php echo $row["caducidad"] ?>
+                    <div class="pop" id="cadu<?php echo($cadu)?>">
+                            <?php $cadu++ ?>
+                            <div class="pophead">
+                                        <div class="titulo"> Cambio de fecha</div>
+                                        <button data-close-button class="close">&times;</button>
+                            </div>
+                            <div class="popbody">
+                            <form name="formulario" action="panel.php" method="POST" >
+                                <input type="date" id="date" name="caducidad" min="<?php date('Y-m-d')?>" max="2099-12-31">
+                                <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </td>
+
+
+                <td data-modal-target=#img<?php echo $img ?>><?php echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="20px; height=30" >';?>
+                    <div class="pop" id="img<?php echo($img)?>">
+                            <?php $cadu++ ?>
+                            <div class="pophead">
+                                        <div class="titulo"> Cambio de Imagen</div>
+                                        <button data-close-button class="close">&times;</button>
+                            </div>
+                            <div class="popbody">
+                            <form name="formulario" action="panel.php" method="POST" >
+                                <input type="file"  name="uploadfile"><br><br>
+                                <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+            
+                </td>
+
+
+                <td><?php if($row["idUsuarioComprador"]==NULL){ ?> <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="delete" class="boton">&times;</button> <?php }
+
+                else {echo("Articulo Comprado!");}?></td>
             <?php 
                 }
             }
             ?>
             </tr>  
         </div>
-        
+        <div id="overlay"></div>
         </table>
+        
     </div>
 
 <?php
@@ -96,8 +218,71 @@ function obtenerid($nombre,$conn){
     return $id;
     }
 
-    require("userbanner.php")
+    require("userbanner.php");
+
+    if(isset($_POST["submit"])){
+        $idProd=$_POST["submit"];
+        if(isset($_POST["nombre"]) && !empty($_POST["nombre"])){
+            $nombre=$_POST["nombre"];
+            ?> <script> console.log(<?php echo $_POST["submit"] ?>)</script> <?php
+            $sql="UPDATE productos SET nombre='$nombre' WHERE idProducto='$idProd'";
+            //Necesita refresh
+        }else if(isset($_POST["descripcion"]) && !empty($_POST["descripcion"]) ) {
+            $desc=$_POST["descripcion"];
+            $sql="UPDATE productos SET descripcion='$desc' WHERE idProducto='$idProd'";
+        }else if(isset($_POST["precio"]) && !empty($_POST["precio"])){
+            $precio=$_POST["precio"];
+            $sql="UPDATE productos SET precio='$precio' WHERE idProducto='$idProd'";
+        }else if(isset($_POST["categorias"]) && !empty($_POST["categorias"])){
+            $categoria=$_POST["categorias"];
+            $sql="UPDATE productos SET idCategoriaProducto='$categoria' WHERE idProducto='$idProd'";
+        }else if(isset($_POST["caducidad"]) && !empty($_POST["caducidad"])){
+            $caducidad=$_POST["caducidad"];
+            $sql="UPDATE productos SET caducidad='$caducidad' WHERE idProducto='$idProd'";
+        }else if(isset($_POST["uploadfile"]) && !empty($_POST["uploadfile"])){
+                $maxsize = 400000;//400KB
+                //fecha actual
+                $date=date('Y-m-d');
+                $id=obtenerid($_SESSION['nombredeusuario'],$conn);
+                $filename = $_FILES["uploadfile"]["name"];
+                $tmp_name = $_FILES["uploadfile"]["tmp_name"]; 
+                ?><script>
+                 console.log(<?php echo $filename ?>);
+                </script> <?php
+                $allowTypes = array('jpg','png','jpeg'); 
+                //obtengo la extension del archivo
+                $extension= pathinfo($filename,PATHINFO_EXTENSION);
+                if(in_array($extension, $allowTypes) && $_FILES["uploadfile"]["size"]<=$maxsize){
+                    $blob=addslashes(file_get_contents($tmp_name));
+                    $sql="UPDATE productos SET contenidoimagen='$blob' , tipoImagen='$extension' WHERE idProducto='$idProd'";
+                    mysqli_query($conn,$sql);  
+                }          
+        }
+        mysqli_query($conn,$sql);
+        ?>
+        <script>
+           // window.location.href = window.location.href
+            </script>
+        <?php
+    }
 ?>
+
+<script>
+$(function(){
+    var dtToday = new Date();
+    
+    var month = dtToday.getMonth() + 1;
+    var day = dtToday.getDate();
+    var year = dtToday.getFullYear();
+    if(month < 10)
+        month = '0' + month.toString();
+    if(day < 10)
+        day = '0' + day.toString();
+    
+    var maxDate = year + '-' + month + '-' + day;
+    $('#date').attr('min', maxDate);
+});</script>
+<script type="text/javascript" src="popup.js"></script>
 </main>
 </body>
 </html>
