@@ -261,7 +261,7 @@ function obtenerid($nombre,$conn){
         mysqli_query($conn,$sql);
         ?>
         <script>
-           // window.location.href = window.location.href
+           window.location.href = window.location.href
             </script>
         <?php
     }
