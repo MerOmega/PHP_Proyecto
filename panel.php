@@ -101,7 +101,7 @@
                 </div>
                 </td>
 
-
+                
                 <td data-modal-target=#precio<?php echo $precio ?>><?php echo $row["precio"]?></div>
                 <div class="pop" id="precio<?php echo($precio)?>">
                         <?php $precio++ ?>
@@ -174,15 +174,15 @@
 
                 <td data-modal-target=#img<?php echo $img ?>><?php echo '<img src="data:image;base64,'.base64_encode($row["contenidoimagen"]).'" alt="Image" style="width="20px; height=30" >';?>
                     <div class="pop" id="img<?php echo($img)?>">
-                            <?php $cadu++ ?>
+                            <?php $img++ ?>
                             <div class="pophead">
                                         <div class="titulo"> Cambio de Imagen</div>
                                         <button data-close-button class="close">&times;</button>
                             </div>
                             <div class="popbody">
-                            <form name="formulario" action="panel.php" method="POST" >
+                            <form name="formularioImagen" action="panel.php"  method="POST" enctype="multipart/form-data" novalidate>
                                 <input type="file"  name="uploadfile"><br><br>
-                                <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="submit" class="boton">Cambiar</button>
+                                <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="upload" class="boton">Cambiar</button>
                             </form>
                             </div>
                         </div>
@@ -191,7 +191,12 @@
                 </td>
 
 
-                <td><?php if($row["idUsuarioComprador"]==NULL){ ?> <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="delete" class="boton">&times;</button> <?php }
+                <td>
+                <?php if($row["idUsuarioComprador"]==NULL){ ?> 
+                <form  name="borrado" action="panel.php"  method="POST">
+                <button type="submit" value="<?php echo($row["idProducto"]) ?>"  name="delete" class="boton">&times;</button> 
+                </form>
+                <?php }
 
                 else {echo("Articulo Comprado!");}?></td>
             <?php 
@@ -239,30 +244,52 @@ function obtenerid($nombre,$conn){
         }else if(isset($_POST["caducidad"]) && !empty($_POST["caducidad"])){
             $caducidad=$_POST["caducidad"];
             $sql="UPDATE productos SET caducidad='$caducidad' WHERE idProducto='$idProd'";
-        }else if(isset($_POST["uploadfile"]) && !empty($_POST["uploadfile"])){
-                $maxsize = 400000;//400KB
-                //fecha actual
-                $date=date('Y-m-d');
-                $id=obtenerid($_SESSION['nombredeusuario'],$conn);
-                $filename = $_FILES["uploadfile"]["name"];
-                $tmp_name = $_FILES["uploadfile"]["tmp_name"]; 
-                ?><script>
-                 console.log(<?php echo $filename ?>);
-                </script> <?php
-                $allowTypes = array('jpg','png','jpeg'); 
-                //obtengo la extension del archivo
-                $extension= pathinfo($filename,PATHINFO_EXTENSION);
-                if(in_array($extension, $allowTypes) && $_FILES["uploadfile"]["size"]<=$maxsize){
-                    $blob=addslashes(file_get_contents($tmp_name));
-                    $sql="UPDATE productos SET contenidoimagen='$blob' , tipoImagen='$extension' WHERE idProducto='$idProd'";
-                    mysqli_query($conn,$sql);  
-                }          
         }
         mysqli_query($conn,$sql);
         ?>
         <script>
            window.location.href = window.location.href
             </script>
+        <?php
+    }
+
+    if(isset($_POST["upload"])){
+        if(empty($_POST["uploadfile"])){       
+        $idProd=$_POST["upload"];
+            $maxsize = 400000;//400KB
+            //fecha actual
+            $date=date('Y-m-d');
+            $id=obtenerid($_SESSION['nombredeusuario'],$conn);
+            $filename = $_FILES["uploadfile"]["name"];
+            
+            $tmp_name = $_FILES["uploadfile"]["tmp_name"]; 
+            ?><script>
+             console.log(<?php echo $filename ?>);
+            </script> <?php
+            $allowTypes = array('jpg','png','jpeg'); 
+            //obtengo la extension del archivo
+            $extension= pathinfo($filename,PATHINFO_EXTENSION);
+            if(in_array($extension, $allowTypes) && $_FILES["uploadfile"]["size"]<=$maxsize){
+                $blob=addslashes(file_get_contents($tmp_name));
+                $sql="UPDATE productos SET contenidoimagen='$blob' , tipoImagen='$extension' WHERE idProducto='$idProd'";
+                mysqli_query($conn,$sql);  
+            }          
+    ?>
+    <script>
+           window.location.href = window.location.href
+    </script>
+    <?php
+        }
+    }
+
+    if(isset($_POST["delete"])){
+        $idProd = $_POST["delete"];
+        $sql="DELETE FROM productos WHERE idProducto='$idProd'";
+        mysqli_query($conn,$sql);
+        ?> 
+        <script>
+           window.location.href = window.location.href
+        </script>
         <?php
     }
 ?>
