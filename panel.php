@@ -52,8 +52,8 @@
         <table class="tabla">
         <tr class="tabla_cabecera">
             <th>Nombre</th>
-            <th>Descripcion</th>
-            <th>Precio</th>
+            <th >Descripcion</th>
+            <th nowrap>Precio</th>
             <th>Categoria</th>
             <th>caducidad</th>
             <th>Imagen</th>

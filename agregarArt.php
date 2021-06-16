@@ -86,9 +86,7 @@
 <?php 
  require("userbanner.php");
  if (isset($_POST['upload'])) {
-    if(!empty($_POST["titulo"]) && !empty($_POST["descripcion"]) && 
-    !empty($_POST["categorias"]) && !empty($_POST["precio"]) && 
-    !empty($_POST["caducidad"]) && !empty($_POST["uploadfile"])){
+        if( cumple() ){
         $nombre=$_POST["titulo"];
         $desc=$_POST["descripcion"];
         $idcat=$_POST["categorias"];
@@ -134,9 +132,9 @@
     }
 
     function cumple(){
-        $existe=false;
+        $existe=true;
         if((!empty($_POST["titulo"]) && !empty($_POST["descripcion"]) && !empty($_POST["categorias"]) && !empty($_POST["precio"]) && !empty($_POST["caducidad"]) && !empty($_POST["uploadfile"])  ) ){
-            $existe=true;
+            $existe=false;
         }
         return $existe;
     }
