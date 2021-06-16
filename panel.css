@@ -46,3 +46,22 @@
     height: max-content;
     margin:0;
 }
+
+button{
+    border: none;
+    width: 80px;
+    height: 40px;
+    border-radius: 3px;
+    text-align: center;
+    background-color: orange;
+    
+}
+
+button:hover{
+    background-color: rgba(122, 88, 13, 0.719);
+    transition: 0.3s;
+}
+
+button:hover{
+    cursor: pointer;
+}
