@@ -1,4 +1,6 @@
-<!doctype html>
+
+<!doctype html
+
 <html>
 
 <?php
@@ -108,6 +110,20 @@
              <br><br><br>
              <p><?php echo "Categoria: ".$nombreCat;?></p>   
              <p><?php echo "Vendedor: ".$usVendedor?></p>
+             <?php 
+              if ((($_SESSION["nombredeusuario"])!="Invitado") && ($usVendedor==($_SESSION["nombredeusuario"]))){
+                  echo "Este es su producto";
+              }
+                  else if (($_SESSION["nombredeusuario"])=="Invitado"){
+                    echo '<a href="login.php">"COMPRAR"</a>';
+                  }
+                  else
+                  {
+                      echo '<a href="adquirirProd.php">"COMPRAR"</a>';
+                  }
+                
+                
+                  ?>
             </div>
         </div>
 </div>
