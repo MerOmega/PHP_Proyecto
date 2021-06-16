@@ -272,14 +272,13 @@ function obtenerid($nombre,$conn){
     }
 
     if(isset($_POST["upload"])){
-        if(empty($_POST["uploadfile"])){       
-        $idProd=$_POST["upload"];
+        if(!($_FILES["uploadfile"]["error"] == 4)){       
+            $idProd=$_POST["upload"];
             $maxsize = 400000;//400KB
             //fecha actual
             $date=date('Y-m-d');
             $id=obtenerid($_SESSION['nombredeusuario'],$conn);
-            $filename = $_FILES["uploadfile"]["name"];
-            
+            $filename = $_FILES["uploadfile"]["name"];          
             $tmp_name = $_FILES["uploadfile"]["tmp_name"]; 
             ?><script>
              console.log(<?php echo $filename ?>);
@@ -297,6 +296,8 @@ function obtenerid($nombre,$conn){
            window.location.href = window.location.href
     </script>
     <?php
+        }else{
+            echo("Debe subir alguna iamgen");
         }
     }
 
