@@ -126,7 +126,16 @@ $nombre = $desc = $precio = $cat = $cadu = $img = 0;
 
                             <td data-modal-target=#cat<?php echo $cat ?>>
                                 <div>
-                                    <p><?php echo ($row["idCategoriaProducto"]) ?>
+                                    <?php
+                                    //consulta sql para obtener todas las categorias de productos
+                                    $idcat = $row["idCategoriaProducto"];
+                                    $sql2 = "SELECT nombre FROM categorias_productos WHERE idCategoriaProducto='$idcat'"; 
+                                    //busqueda en la bd de la consulta sql
+                                    $result2 = $conn->query($sql2);
+                                    $row2 = mysqli_fetch_row($result2);
+                                    ?>
+
+                                    <p><?php echo ($row2[0]) ?>
                                     </p>
                                 </div>
                             </td>
@@ -327,6 +336,7 @@ $nombre = $desc = $precio = $cat = $cadu = $img = 0;
             });
         </script>
         <script type="text/javascript" src="popup.js"></script>
+        <script type="text/javascript" src="validarArt.js"></script>
     </main>
 </body>
 

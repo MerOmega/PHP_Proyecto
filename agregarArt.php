@@ -151,7 +151,7 @@ $(function(){
     var maxDate = year + '-' + month + '-' + day;
     $('#date').attr('min', maxDate);
 });</script>
-
+<script  type="text/javascript" src="validarArt.js"></script>
 </main>
 </body>
 </html>

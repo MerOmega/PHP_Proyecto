@@ -101,7 +101,7 @@ function cartel(valido,variable,motivo){
 
 
     function validTelef(tel){  
-            var campo=(/^[0-9]+$/); /*aceptar 1ergrupo@2dogrupo.3ergrupo  donde el 2er grupo puede tener una extension de entre 2 y 4 chars ej .com .co etc*/
+            var campo=(/^[0-9]+$/); /*solo nros*/
             var esValido=true;
             var motivo;
             if(!campo.test(String(tel.value))){
