@@ -63,23 +63,7 @@
                 }
             }
         ?>
-        <?php if(isset($_SESSION['buscador'])){
-           echo "<form action='search.php' method='post' >
-                    <select name='sort' >
-                            <option value='precioAs'>Precio Mayor a menor</option>
-                            <option value='precioDesc'>Precio Menor a Mayor</option>
-                            <option value='fechaAs'>Caducidad mas cercana</option>
-                            <option value='fechaDes'>Caducidad mas lejana</option>
-                        </select>
-                        <button type='submit' class='boton'>Seleccionar</button>
-            </form>";
-            }
-        ?>
-          <?php 
-            require("paginacionSearch.php");
-        ?>
-
-<div class="wrapper" > 
+        <div class="wrapper" > 
         <?php
                 if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -99,6 +83,19 @@
                 ?> 
         </div>
 
+        <?php if(isset($_SESSION['buscador'])){
+           echo "<form action='search.php' method='post' >
+                    <select name='sort' >
+                            <option value='precioAs'>Precio Mayor a menor</option>
+                            <option value='precioDesc'>Precio Menor a Mayor</option>
+                            <option value='fechaAs'>Caducidad mas cercana</option>
+                            <option value='fechaDes'>Caducidad mas lejana</option>
+                        </select>
+                        <button type='submit' class='boton'>Seleccionar</button>
+            </form>";
+            }
+        ?>
+
         <?php
          require('BD.php'); //enlazo la base
          ?>
@@ -117,23 +114,23 @@
          <select name="categorias">
          <option value="show_all">Todas las categorias</option>'
          ?>
-         <?php while($datos=mysqli_fetch_array( $result )){ ?>
+         <?php while($datos=mysqli_fetch_array( $result)){ ?>
          <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
          <?php } ?>
          </select>
         <button type="submit" class="boton">Seleccionar</button>
-        </form>';
+        </form>
         <?php
          }
          ?>
-         <?php 
+        <?php 
             require("paginacionSearch.php");
         ?>
-
         <p> <?php echo $texto; ?> </p>
         <div id="pag_control" ><?php echo $paginCtrls; ?></div>
 
-         
+    
+
        <?php
        require("userbanner.php")
        ?>

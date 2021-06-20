@@ -7,6 +7,21 @@
                     $_SESSION['sort_user_defined']='ORDER BY precio DESC';
                 }
 
+                function procesoFiltroCategory($var1){
+                    $date=date('Y-m-d');
+                    //se verifica si el usuario elige nuevamente ver todos los productos
+                    if($_SESSION['category_user']=="show_all"){
+                       //se muestran los productos no caducados y no comprados
+                        $_SESSION['category_user']="WHERE (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')";
+                    }
+                    else{
+                        //si no se buscará en la bd los productos de la categoria var1
+                        $_SESSION['category_user'] ="WHERE (C.nombre ='$var1') AND (P.idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date')
+                        AND P.nombre LIKE  '".$_SESSION['buscador']."'";
+                    }
+                }
+
+
                 //funcion que se encarga de obtener y
                 //guardar en una sesion la condicion sql requerida para el orden elegido por el usuario
                 function procesoFiltroSort(){
@@ -33,11 +48,29 @@
                 if(!isset($_SESSION['buscador'])){
                     $sql="SELECT COUNT(1) from dual WHERE false";
                 }else{
+                   if(isset($_POST['categorias'])){
+                        //se guarda la categoria elegida en una sesion
+                        $_SESSION['category_user']=$_POST['categorias'];
+                        //se procesa la categoria elegida para saber cual fue
+                        procesoFiltroCategory($_POST['categorias']);
+                    }  
+                    //verifica que este definida la categoria a buscar 
+                    if(isset($_SESSION['category_user'])){
+                        //guarda en las variables categoria y string las condiciones de la consulta sql
+                            $categoria=$_SESSION['category_user'];
+                            $string=$_SESSION['sort_user_defined'];
+                            //se realiza la consulta sql para buscar en la bd los productos con la categoria solicitada y en orden
+                            $sql= "SELECT COUNT(*)FROM productos P INNER JOIN categorias_productos C ON 
+                            (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string";  
+                    }else{
+                    //si no hay una categoria seleccionada ordena por el orden definido por defecto
                     $string=$_SESSION['sort_user_defined'];
                     $search = $conn->real_escape_string($_SESSION['buscador']);
                     $date=date('Y-m-d');
-                    //consulta sql que busca en la bd 
-                    $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";  
+                    //consulta sql que filtra los productos que no hayan sido comprados y no esten caducados, y ordenados por 
+                    $sql= "SELECT COUNT(*) FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";      
+                    }
+                      
                 }     
                 //obtengo la cantidad total de elementos 
                 $result = $conn->query($sql);
@@ -69,14 +102,34 @@
                 $saltea=($pagenum-1)*$page_rows;
 
                 $limit = 'LIMIT ' .$saltea.','.$page_rows;
+                
+        
 
                 if(!isset($_SESSION['buscador'])){
                     $sql="SELECT 1 from dual WHERE false";
                 }else{
-                    $string= $_SESSION['sort_user_defined'];
+                    if(isset($_POST['categorias'])){
+                        //se guarda la categoria elegida en una sesion
+                        $_SESSION['category_user']=$_POST['categorias'];
+                        //se procesa la categoria elegida para saber cual fue
+                        procesoFiltroCategory($_POST['categorias']);
+                    }  
+                    //verifica que este definida la categoria a buscar 
+                    if(isset($_SESSION['category_user'])){
+                        //guarda en las variables categoria y string las condiciones de la consulta sql
+                            $categoria=$_SESSION['category_user'];
+                            $string=$_SESSION['sort_user_defined'];
+                            //se realiza la consulta sql para buscar en la bd los productos con la categoria solicitada y en orden
+                            $sql= "SELECT P.* FROM productos P INNER JOIN categorias_productos C ON 
+                            (P.idCategoriaProducto = C.idCategoriaProducto) $categoria $string";  
+                    }else{
+                    //si no hay una categoria seleccionada ordena por el orden definido por defecto
+                    $string=$_SESSION['sort_user_defined'];
                     $search = $conn->real_escape_string($_SESSION['buscador']);
                     $date=date('Y-m-d');
-                    $sql= "SELECT * FROM  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string $limit";
+                    //consulta sql que filtra los productos que no hayan sido comprados y no esten caducados, y ordenados por 
+                    $sql= "SELECT P.*  productos WHERE nombre LIKE '%$search%' AND (idUsuarioComprador<=>NULL) AND (DATE(caducidad)>'$date') $string";      
+                    }
                 }
                 $result = $conn->query($sql);
                 $texto="Pagina <b>$pagenum</b> of <b>$last</b>";
