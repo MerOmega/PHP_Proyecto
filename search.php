@@ -78,7 +78,8 @@
           <?php 
             require("paginacionSearch.php");
         ?>
-        <div class="wrapper" > 
+
+<div class="wrapper" > 
         <?php
                 if ($result->num_rows > 0) {
                 while($row = $result->fetch_assoc()) {
@@ -98,9 +99,41 @@
                 ?> 
         </div>
 
+        <?php
+         require('BD.php'); //enlazo la base
+         ?>
+         <div id="sorted">
+         <?php 
+         //consulta sql para obtener todas las categorias de productos
+         $sql= "SELECT * FROM categorias_productos";?>
+         </div>
+         <?php
+         //busqueda en la bd de la consulta sql
+         $result = $conn->query($sql);
+         ?>
+
+        <?php if(isset($_SESSION['buscador'])){
+        echo '<form action="search.php" method="post">
+         <select name="categorias">
+         <option value="show_all">Todas las categorias</option>'
+         ?>
+         <?php while($datos=mysqli_fetch_array( $result )){ ?>
+         <option value="<?php echo $datos['nombre'] ?>"><?php echo $datos['nombre'] ?></option>
+         <?php } ?>
+         </select>
+        <button type="submit" class="boton">Seleccionar</button>
+        </form>';
+        <?php
+         }
+         ?>
+         <?php 
+            require("paginacionSearch.php");
+        ?>
+
         <p> <?php echo $texto; ?> </p>
         <div id="pag_control" ><?php echo $paginCtrls; ?></div>
 
+         
        <?php
        require("userbanner.php")
        ?>

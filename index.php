@@ -77,6 +77,12 @@ function procesoFiltroCategory($var1){
                     <a href="registrar.php">Crear Cuenta</a>
                     <a href="logout.php">Log Out</a>
                 </div>
+                <div id="usuarios">
+                <?php
+                 if($_SESSION["nombredeusuario"]!="Invitado"){
+                    echo '<a href="Compras.php?nomusuario='.$_SESSION["nombredeusuario"].'">Mis compras</a>';}
+                    ?>
+                </div>
         </nav>
     </div>
 </header>

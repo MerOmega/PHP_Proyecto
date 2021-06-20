@@ -16,6 +16,7 @@
     <title>
         Compra Barato
     </title>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     <link rel="stylesheet" type="text/css" href="main.css?v=1.1">
     <meta name="viewport" content="width=device-width">
 </head>
@@ -56,6 +57,7 @@
         $result = $conn->query($sql);
         if($result->num_rows > 0){
             while ($row = $result->fetch_assoc()){ 
+                $id=$row['idProducto'];
                 $nombre=$row['nombre'];
                 $precio=$row["precio"];
                 $descripcion=$row['descripcion'];
@@ -115,11 +117,11 @@
                   echo "Este es su producto";
               }
                   else if (($_SESSION["nombredeusuario"])=="Invitado"){
-                    echo '<a href="login.php">"COMPRAR"</a>';
+                    echo '<a  href="login.php">"COMPRAR"</a>';
                   }
                   else
                   {
-                      echo '<a href="adquirirProd.php">"COMPRAR"</a>';
+                      echo '<a href="Compras.php?id='.$id.'">"COMPRAR"</a>';
                   }
                 
                 

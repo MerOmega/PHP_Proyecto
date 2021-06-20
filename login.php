@@ -22,6 +22,7 @@
             return $this->usuario;
         }
 
+
         function validar($conn){
             //la instancia de usuario invoca al metodo validar
             //valida que usuario y contraseña sean validos
