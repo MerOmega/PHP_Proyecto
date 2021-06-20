@@ -44,40 +44,6 @@ $nombre = $desc = $precio = $cat = $cadu = $img = 0;
             </nav>
         </div>
     </header>
-    <?php
-    if (isset($_GET['id'])) {
-        $idproducto = $_GET['id'];
-        $nombrecomprador = $_SESSION["nombredeusuario"];
-        $sql = "SELECT idUsuario FROM usuarios WHERE (nombredeusuario = '$nombrecomprador' )";
-        require('BD.php');
-        $result = $conn->query($sql);
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $idcomprador = $row['idUsuario'];
-            }
-
-            $sql = "UPDATE productos SET idUsuarioComprador = $idcomprador WHERE idProducto = '$idproducto'";
-            if ($conn->query($sql) == TRUE) {
-    ?>
-                <script>
-                    Swal.fire({
-                        title: 'Exito!',
-                        text: 'Ha realizado la compra exitosamente',
-                        icon: 'success',
-                        confirmButtonText: 'Aceptar'
-                    })
-                </script>
-
-    <?php
-
-            } else {
-                echo "Hubo problemas";
-            }
-        }
-    }
-
-    ?>
-
     <body>
 
         <div id="cont_tabla">
